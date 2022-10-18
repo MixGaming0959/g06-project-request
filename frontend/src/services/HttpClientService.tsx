@@ -76,7 +76,7 @@ async function GetRooms(bid: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -87,10 +87,12 @@ async function GetRooms(bid: any) {
   else{
     command = `${apiUrl}/rooms/building/${bid}`;
   }
+  console.log(`${command} , ${bid}`);
   let res = await fetch(command, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
+        console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -104,7 +106,7 @@ async function GetBuildings() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -113,7 +115,6 @@ async function GetBuildings() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         return res.data;
       } else {
         return false;

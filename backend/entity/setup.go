@@ -83,4 +83,16 @@ func SetupDatabase() {
 	var user User
 	db.Raw("SELECT * FROM users WHERE email = ?", "test@gmail.com").Scan(&user)
 
+	db.Model(&Building{}).Create(&Building{Name: "ตึกA"})
+	db.Model(&Building{}).Create(&Building{Name: "ตึกB"})
+
+	var buildingA, buildingB Building
+	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกA").Scan(&buildingA)
+	db.Raw("SELECT * FROM buildings WHERE name = ?", "ตึกB").Scan(&buildingB)
+
+	db.Model(&Room{}).Create(&Room{Name: "ห้องA", Building: buildingA})
+	db.Model(&Room{}).Create(&Room{Name: "ห้องB", Building: buildingB})
+	db.Model(&Room{}).Create(&Room{Name: "ห้องA1", Building: buildingA})
+	db.Model(&Room{}).Create(&Room{Name: "ห้องB1", Building: buildingB})
+
 }

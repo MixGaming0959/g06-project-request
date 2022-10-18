@@ -79,7 +79,7 @@ const Drawer = styled(MuiDrawer, {
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  // { name: "สมาชิก", icon: <PeopleIcon />, path: "/users" },
+  { name: "บันทึกการแจ้งซ่อม", icon: <PeopleIcon />, path: "/requestcreate" },
   // { name: "การเข้าชมวีดีโอ", icon: <YouTubeIcon />, path: "/watch_videos" },
 ];
 
@@ -190,14 +190,14 @@ return (
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
                 <Route path="/" element={<Home />} />
-                {/* <Route path="/users" element={<Users />} />
-                <Route path="/user/create" element={<UserCreate />} />
+                <Route path="/requestcreate" element={<RequestCreate />} />
+                {/* <Route path="/user/create" element={<UserCreate />} />
                 <Route path="/watch_videos" element={<WatchVideos />} />
                 <Route
                   path="/watch_video/create"
                   element={<WatchVideoCreate />}
-                /> */}
-              </Routes>
+                />*/}
+              </Routes> 
             </Container>
           </Box>
         </Box>

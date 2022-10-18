@@ -25,7 +25,9 @@ import { UsersInterface } from "../models/IUser";
 import {
   GetBuildings,
   GetUser,
+  GetRooms,
 } from "../services/HttpClientService";
+import NativeSelect from "@mui/material/NativeSelect/NativeSelect";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props, ref ) {
  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -35,11 +37,25 @@ function RequestCreate() {
   const [user, setUser] = useState<UsersInterface>();
 
   const [request, setRequest] = useState<RequestsInterface>();
+
   const [building, setBuilding] = useState<BuildingsInterface[]>([]);
+  const [bid, setBid] = useState<number>();
+
   const [room, setRoom] = useState<RoomsInterface[]>([]);
+  const [rid, setRid] = useState<number>();
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    getBuilding();
+    getUser();
+  }, []);
+
+  const convertType = (data: string | number | undefined) => {
+    let val = typeof data === "string" ? parseInt(data) : data;
+    return val;
+  };
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -60,6 +76,13 @@ function RequestCreate() {
     // setRequest({ ...request, [id]: value });
   };
 
+  const onChangeBuilding = async (id: any) =>{
+    GetRooms(id).then(res => {
+      setRoom(res.data)
+    }).catch(err => console.log(err))
+    
+  }
+
   const getUser = async () => {
     let res = await GetUser();
     if (res) {
@@ -72,12 +95,11 @@ function RequestCreate() {
     if (res) {
       setBuilding(res);
     }
+    console.log("building");
+    console.log(building);
   };
 
-  useEffect(() => {
-    getBuilding();
-    getUser();
-  }, []);
+  
 
   function submit() {}
 
@@ -98,13 +120,13 @@ function RequestCreate() {
            </Snackbar>
 
     <Paper>
-      <Box display="flex" sx={{ marginTop: 2, }} >
+      {/* <Box display="flex" sx={{ marginTop: 2, }} >
         <Box sx={{ paddingX: 2, paddingY: 1 }}>
           <Typography component="h2" variant="h6" color="primary" gutterBottom >
            Create Request
           </Typography>
         </Box>
-      </Box>
+      </Box> */}
 
       <Divider />
       <Grid container spacing={3} sx={{ padding: 2 }}>
@@ -123,36 +145,47 @@ function RequestCreate() {
           </FormControl>
         </Grid>
        
-
+          
+        
         <Grid item xs={6}>
+          {/* <p>สถานที่ที่อุปกรณ์ชำรุด </p> */}
           <FormControl fullWidth variant="outlined">
-            <p>สถานที่ที่อุปกรณ์ชำรุด </p>
             <p>ตึก</p>
             <Select
-              labelId="building-select-label"
-              id="building-select"
-              value={""}
-              label="ตึก"
-              // onChange={""}
+              defaultValue={0}
+              onChange={(e) => onChangeBuilding(e.target.value)}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem  value={0}>กรุณาเลือกตึก</MenuItem>
+                {building.map((item: BuildingsInterface) => (
+                  <MenuItem 
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Name}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
         </Grid>
 
-        <Grid item xs={12}>
-          <FormControl fullWidth variant="outlined">
-            <p>Email</p>
-            <TextField
-              id="Email"
-              variant="outlined"
-              type="string"
-              size="medium"
-              value={""}
-              onChange={handleInputChange}
-            />
+        <Grid item xs={6}>
+          <FormControl fullWidth variant="outlined">   
+            <p>ห้อง</p>
+            <Select
+              defaultValue={0}
+              label="ห้อง"
+              // onChange={(e) => {onChangeBuilding(e.target.value)}}
+            >
+              <MenuItem value={0}>กรุณาเลือกห้อง</MenuItem>
+                {/* {room.map((item: RoomsInterface) => (
+                  <MenuItem
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Name}
+                  </MenuItem>
+                ))} */}
+            </Select>
           </FormControl>
         </Grid>
 

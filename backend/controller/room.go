@@ -34,12 +34,18 @@ func GetRoom(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 func GetRoomBuilding(c *gin.Context) {
-	var room entity.Room
-	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM rooms WHERE building_id = ?", id).Scan(&room).Error; err != nil {
+	var room []entity.Room
+	building_id := c.Param("building_id")
+	// if err := entity.DB().Raw("SELECT * FROM rooms WHERE building_id = ?", id).Scan(&room).Error; err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE building_id = ?", building_id).Scan(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 
