@@ -44,6 +44,7 @@ func main() {
 			// Room has Device Routes
 			r.GET("/room_has_devices", controller.ListRoom_has_Devices)
 			r.GET("/room_has_device/:id", controller.GetRoom_has_Device)
+			r.GET("/room_has_device/room/:id", controller.GetRHD_Device)
 			r.POST("/room_has_devices", controller.CreateRoom_has_Device)
 			r.PATCH("/room_has_devices", controller.UpdateRoom_has_Device)
 			r.DELETE("/room_has_devices/:id", controller.DeleteRoom_has_Device)

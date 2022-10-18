@@ -21,6 +21,7 @@ import { RequestsInterface } from "../models/IRequest";
 import { BuildingsInterface } from "../models/IBuilding";
 import { RoomsInterface } from "../models/IRoom";
 import { UsersInterface } from "../models/IUser";
+import { RHDsInterface } from "../models/IRHD";
 
 import {
   GetBuildings,
@@ -35,14 +36,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props
 
 function RequestCreate() {
   const [user, setUser] = useState<UsersInterface>();
-
   const [request, setRequest] = useState<RequestsInterface>();
-
   const [building, setBuilding] = useState<BuildingsInterface[]>([]);
-  const [bid, setBid] = useState<number>();
-
   const [room, setRoom] = useState<RoomsInterface[]>([]);
-  const [rid, setRid] = useState<number>();
+  const [rhd, setRHD] = useState<RHDsInterface[]>([]);
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -73,13 +70,34 @@ function RequestCreate() {
     // setRequest({ ...request, [id]: value });
   };
 
-  const onChangeBuilding = async (bid: any) =>{
-    setBid(convertType(bid));
+  const onChangeBuilding = async (e: SelectChangeEvent) =>{
+    const bid = e.target.value;
     let res = await GetRooms(bid);
     if (res) {
       setRoom(res);
     }
-    
+    console.log("room");
+    console.log(room);
+  }
+
+  const onChangeRoom = async (e: SelectChangeEvent) =>{
+    const rid = e.target.value;
+    let res = await GetRooms(rid);
+    if (res) {
+      setRoom(res);
+    }
+    console.log("device");
+    console.log(rhd);
+  }
+
+  const onChangeRHD = async (e: SelectChangeEvent) =>{
+    const id = e.target.value;
+    let res = await GetRooms(id);
+    if (res) {
+      setRoom(res);
+    }
+    console.log("device");
+    console.log(rhd);
   }
 
   const getUser = async () => {
@@ -87,34 +105,6 @@ function RequestCreate() {
     if (res) {
       setUser(res);
     }
-  };
-
-  const getRooms = async (bid: any) => {
-    const apiUrl = "http://localhost:8080";
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    };
-    let command = ``;
-    if(bid == null) {
-      command = `${apiUrl}/rooms`;
-    }
-    else{
-      command = `${apiUrl}/rooms/building/${bid}`;
-    }
-    console.log(`${command} , ${bid}`);
-    let res = await fetch(command, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        if (res.data) {
-          console.log(res.data);
-          setRoom (res.data);
-        } 
-
-      });
   };
 
   const getBuilding = async () => {
@@ -128,7 +118,6 @@ function RequestCreate() {
 
   useEffect(() => {
     getBuilding();
-    getRooms(bid);
     getUser();
   }, []);
 
@@ -184,10 +173,13 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">
             <p>ตึก</p>
             <Select
-              defaultValue={0}
-              onChange={(e) => (onChangeBuilding)}
+              defaultValue={"0"}
+              onChange={ (onChangeBuilding) }
+              inputProps={{
+                name: "BuildingID",
+              }}
             >
-              <MenuItem  value={0}>กรุณาเลือกตึก</MenuItem>
+              <MenuItem  value={"0"}>กรุณาเลือกตึก</MenuItem>
                 {building.map((item: BuildingsInterface) => (
                   <MenuItem 
                     key={item.ID}
@@ -204,11 +196,13 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">   
             <p>ห้อง</p>
             <Select
-              defaultValue={0}
-              label="ห้อง"
-              // onChange={(e) => {onChangeBuilding(e.target.value)}}
+              defaultValue={"0"}
+              onChange={onChangeRoom}
+              inputProps={{
+                name: "RoomID",
+              }}
             >
-              <MenuItem value={0}>กรุณาเลือกห้อง</MenuItem>
+              <MenuItem value={"0"}>กรุณาเลือกห้อง</MenuItem>
                 {room?.map((item: RoomsInterface) => 
                   <MenuItem
                     key={item.ID}
@@ -225,19 +219,19 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">   
             <p>รหัสอุปกรณ์</p>
             <Select
-              defaultValue={0}
+              defaultValue={"0"}
               label="รหัสอุปกรณ์"
               // onChange={(e) => {onChangeBuilding(e.target.value)}}
             >
-              <MenuItem value={0}>กรุณาเลือกรหัสอุปกรณ์</MenuItem>
-                {/* {room?.map((item: RoomsInterface) => 
+              <MenuItem value={"0"}>กรุณาเลือกรหัสอุปกรณ์</MenuItem>
+                {rhd?.map((item: RHDsInterface) => 
                   <MenuItem
                     key={item.ID}
                     value={item.ID}
                   >
-                    {item.Name}
+                    {item.ID}
                   </MenuItem>
-                )} */}
+                )}
             </Select>
           </FormControl>
         </Grid>

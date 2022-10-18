@@ -32,6 +32,17 @@ func GetRoom_has_Device(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": room_has_device})
 }
 
+// GET /room_has_device/room/:id
+func GetRHD_Device(c *gin.Context) {
+	var room_has_device entity.Room_has_Device
+	id := c.Param("id")
+	if err := entity.DB().Raw("SELECT * FROM room_has_devices WHERE room_id", id).Scan(&room_has_device).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": room_has_device})
+}
+
 // GET /room_has_devices
 func ListRoom_has_Devices(c *gin.Context) {
 	var room_has_devices []entity.Room_has_Device
