@@ -31,11 +31,11 @@ type Request struct {
 	Start_At time.Time
 
 	UserID             *uint
-	Job_TypeID         *uint
+	JobTypeID          *uint
 	Room_has_Device_ID *uint
 	User               User            `gorm:"references:id"`
 	Room_has_Device    Room_has_Device `gorm:"references:id"`
-	Job_Type           Job_Type        `gorm:"references:id"`
+	JobType            JobType         `gorm:"references:id"`
 
 	Cart   *Cart `gorm:"references:id"`
 	CartID *uint
@@ -58,6 +58,8 @@ type Room_has_Device struct {
 
 type Device struct {
 	gorm.Model
+
+	Name string
 
 	DistributorID *uint
 	TypeID        *uint
@@ -179,9 +181,9 @@ type Level struct {
 	Cart []Cart `gorm:"foreignkey:LevelID"`
 }
 
-type Job_Type struct {
+type JobType struct {
 	gorm.Model
 	Name string
 
-	Request []Request `gorm:"foreignkey:Job_TypeID"`
+	Request []Request `gorm:"foreignkey:JobTypeID"`
 }

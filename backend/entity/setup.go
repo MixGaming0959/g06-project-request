@@ -30,7 +30,7 @@ func SetupDatabase() {
 		&Role{},
 		&Gender{},
 		&Position{},
-		&Job_Type{},
+		&JobType{},
 		&Status{},
 		&Bill{},
 		&Cause{},
@@ -94,5 +94,10 @@ func SetupDatabase() {
 	db.Model(&Room{}).Create(&Room{Name: "ห้องB", Building: buildingB})
 	db.Model(&Room{}).Create(&Room{Name: "ห้องA1", Building: buildingA})
 	db.Model(&Room{}).Create(&Room{Name: "ห้องB1", Building: buildingB})
+
+	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมคอม"})
+	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมรถ"})
+
+	db.Model(&Device{}).Create(&Device{Name: "เครื่องA"})
 
 }

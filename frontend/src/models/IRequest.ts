@@ -1,5 +1,5 @@
 import { UsersInterface } from "./IUser";
-import { UrgencysInterface } from "./IUrgency";
+import { JobTypesInterface } from "./IJobType";
 import { RHDsInterface } from "./IRHD";
 
 export interface RequestsInterface {
@@ -11,8 +11,8 @@ export interface RequestsInterface {
     UserID?: number;
     User?: UsersInterface;
 
-    UrgencyID?: number;
-    Urgency?: UrgencysInterface;
+    JobTypeID?: number;
+    JobType?: JobTypesInterface;
 
     RHD_ID?: number;
     RHD?: RHDsInterface;

@@ -36,8 +36,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props
 });
 
 function RequestCreate() {
-  const [user, setUser] = useState<UsersInterface>();
-  const [request, setRequest] = useState<RequestsInterface>();
+  const [user, setUser] = useState<UsersInterface[]>([]);
+  const [request, setRequest] = useState<RequestsInterface>({
+    Explan: "",
+    Date_Start: new Date(),
+  });
   const [building, setBuilding] = useState<BuildingsInterface[]>([]);
   const [room, setRoom] = useState<RoomsInterface[]>([]);
   const [rhd, setRHD] = useState<RHDsInterface[]>([]);
@@ -93,6 +96,7 @@ function RequestCreate() {
 
   const onChangeRHD = async (e: SelectChangeEvent) =>{
     const id = e.target.value;
+
     // let res = await GetRHD(id);
     // if (res) {
     //   setRHD(res);
@@ -123,7 +127,7 @@ function RequestCreate() {
     getUser();
   }, []);
 
-  console.log(`userName: ${user}`);
+  console.log(user);
 
   function submit() {}
 
@@ -225,10 +229,14 @@ function RequestCreate() {
             <Select
               defaultValue={"0"}
               label="รหัสอุปกรณ์"
-              // onChange={(e) => {onChangeBuilding(e.target.value)}}
+              value={request.RHD_ID + ""}
+              onChange={onChangeRHD}
+              inputProps={{
+                name: "RHD_ID",
+              }}
             >
               <MenuItem value={"0"}>กรุณาเลือกรหัสอุปกรณ์</MenuItem>
-                {rhd?.map((item: RHDsInterface) => 
+                {rhd.map((item: RHDsInterface) => 
                   <MenuItem
                     key={item.ID}
                     value={item.ID}
