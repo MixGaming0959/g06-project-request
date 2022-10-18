@@ -27,6 +27,7 @@ import {
   GetBuildings,
   GetUser,
   GetRooms,
+  GetRHD,
 } from "../services/HttpClientService";
 import NativeSelect from "@mui/material/NativeSelect/NativeSelect";
 
@@ -82,7 +83,7 @@ function RequestCreate() {
 
   const onChangeRoom = async (e: SelectChangeEvent) =>{
     const rid = e.target.value;
-    let res = await GetRooms(rid);
+    let res = await GetRHD(rid);
     if (res) {
       setRoom(res);
     }
@@ -92,12 +93,12 @@ function RequestCreate() {
 
   const onChangeRHD = async (e: SelectChangeEvent) =>{
     const id = e.target.value;
-    let res = await GetRooms(id);
-    if (res) {
-      setRoom(res);
-    }
-    console.log("device");
-    console.log(rhd);
+    // let res = await GetRHD(id);
+    // if (res) {
+    //   setRHD(res);
+    // }
+    // console.log("device");
+    // console.log(rhd);
   }
 
   const getUser = async () => {
@@ -105,6 +106,7 @@ function RequestCreate() {
     if (res) {
       setUser(res);
     }
+    // console.log(user);
   };
 
   const getBuilding = async () => {
@@ -120,6 +122,8 @@ function RequestCreate() {
     getBuilding();
     getUser();
   }, []);
+
+  console.log(`userName: ${user}`);
 
   function submit() {}
 

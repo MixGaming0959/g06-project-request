@@ -1,6 +1,6 @@
 export interface BuildingsInterface {
 
-    ID?: number,
+    ID: number,
     Name: string,
     Location: string;
    

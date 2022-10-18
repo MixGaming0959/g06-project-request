@@ -1,15 +1,15 @@
+import { RolesInterface } from "./IRole";
+
 export interface UsersInterface {
 
     ID: number,
-   
     Name: string;
-   
     Email: string;
-   
-    Pword_ID: string;
-   
-    Role_ID: string;
+    Phone_number: string;
+    Password: string;
 
-    Gender_ID: string;
-   
+    PositionID: string;
+    RoleID: string;
+    Role: RolesInterface;
+    GenderID: string;
 }

@@ -68,7 +68,6 @@ async function GetUser() {
         return false;
       }
     });
-
   return res;
 }
 
@@ -80,15 +79,8 @@ async function GetRooms(bid: any) {
       "Content-Type": "application/json",
     },
   };
-  let command = ``;
-  if(bid == null) {
-    command = `${apiUrl}/rooms`;
-  }
-  else{
-    command = `${apiUrl}/rooms/building/${bid}`;
-  }
-  console.log(`${command} , ${bid}`);
-  let res = await fetch(command, requestOptions)
+
+  let res = await fetch(`${apiUrl}/rooms/building/${bid}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -124,8 +116,7 @@ async function GetBuildings() {
   return res;
 }
 
-async function GetPlaylistByUID() {
-  let uid = localStorage.getItem("uid");
+async function GetRHD(rid: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -135,7 +126,7 @@ async function GetPlaylistByUID() {
   };
 
   let res = await fetch(
-    `${apiUrl}/playlist/watched/user/${uid}`,
+    `${apiUrl}/room_has_device/room/${rid}`,
     requestOptions
   )
     .then((response) => response.json())
@@ -199,7 +190,7 @@ export {
   GetRequests,
   GetRooms,
   GetBuildings,
-  GetPlaylistByUID,
+  GetRHD,
   CreateUser,
   Requests,
 };
