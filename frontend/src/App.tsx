@@ -20,12 +20,11 @@ import Button from "@mui/material/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-//import Requests from "./components/Requests";
-import RequestCreate from "./components/RequestCreate";
-import Selection from "./components/Selection";
+import Request from "./components/Request";
+
 import SignIn from "./components/SignIn";
 import Home from "./components/Home";
+import RequestCreate from "./components/RequestCreate";
 
 const drawerWidth = 240;
 
@@ -79,7 +78,7 @@ const Drawer = styled(MuiDrawer, {
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "บันทึกการแจ้งซ่อม", icon: <PeopleIcon />, path: "/requestcreate" },
+  { name: "ข้อมูลการแจ้งซ่อม", icon: <PeopleIcon />, path: "/request" },
   // { name: "การเข้าชมวีดีโอ", icon: <YouTubeIcon />, path: "/watch_videos" },
 ];
 
@@ -190,7 +189,8 @@ return (
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/requestcreate" element={<RequestCreate />} />
+                <Route path="/request" element={<Request />} />
+                <Route path="/request/create" element={<RequestCreate />} />
                 {/* <Route path="/user/create" element={<UserCreate />} />
                 <Route path="/watch_videos" element={<WatchVideos />} />
                 <Route

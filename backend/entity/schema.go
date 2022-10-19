@@ -27,8 +27,8 @@ type User struct {
 
 type Request struct {
 	gorm.Model
-	Report   string
-	Start_At time.Time
+	Explain    string
+	Date_Start time.Time
 
 	UserID             *uint
 	JobTypeID          *uint
@@ -37,8 +37,7 @@ type Request struct {
 	Room_has_Device    Room_has_Device `gorm:"references:id"`
 	JobType            JobType         `gorm:"references:id"`
 
-	Cart   *Cart `gorm:"references:id"`
-	CartID *uint
+	Cart *Cart `gorm:"foreignkey:RequestID"`
 }
 
 type Room_has_Device struct {
@@ -169,21 +168,21 @@ type Cause struct {
 
 type Type struct {
 	gorm.Model
-	Name string
+	Name string `gorm:"uniqueIndex"`
 
 	Device []Device `gorm:"foreignkey:TypeID"`
 }
 
 type Level struct {
 	gorm.Model
-	Name string
+	Name string `gorm:"uniqueIndex"`
 
 	Cart []Cart `gorm:"foreignkey:LevelID"`
 }
 
 type JobType struct {
 	gorm.Model
-	Name string
+	Name string `gorm:"uniqueIndex"`
 
 	Request []Request `gorm:"foreignkey:JobTypeID"`
 }

@@ -27,7 +27,7 @@ func CreateJobType(c *gin.Context) {
 func GetJobType(c *gin.Context) {
 	var JobType entity.JobType
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM JobTypes WHERE id = ?", id).Scan(&JobType).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Job_Types WHERE id = ?", id).Scan(&JobType).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -37,7 +37,7 @@ func GetJobType(c *gin.Context) {
 // GET /JobTypes
 func ListJobTypes(c *gin.Context) {
 	var JobTypes []entity.JobType
-	if err := entity.DB().Raw("SELECT * FROM JobTypes").Scan(&JobTypes).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM Job_Types").Scan(&JobTypes).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

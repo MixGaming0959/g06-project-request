@@ -116,6 +116,28 @@ async function GetBuildings() {
   return res;
 }
 
+async function GetJobTypes() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/jobtypes`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function GetRHD(rid: any) {
   const requestOptions = {
     method: "GET",
@@ -133,26 +155,6 @@ async function GetRHD(rid: any) {
     .then((res) => {
       if (res.data) {
         console.log(res.data);
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function CreateUser(data: UsersInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/users`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
         return res.data;
       } else {
         return false;
@@ -192,6 +194,6 @@ export {
   GetRooms,
   GetBuildings,
   GetRHD,
-  CreateUser,
   Requests,
+  GetJobTypes,
 };

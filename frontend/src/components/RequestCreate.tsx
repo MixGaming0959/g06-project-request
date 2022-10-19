@@ -17,19 +17,21 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import MenuItem from "@mui/material/MenuItem";
 
-import { RequestsInterface } from "../models/IRequest";
-import { BuildingsInterface } from "../models/IBuilding";
-import { RoomsInterface } from "../models/IRoom";
-import { UsersInterface } from "../models/IUser";
-import { RHDsInterface } from "../models/IRHD";
-
 import {
   GetBuildings,
   GetUser,
   GetRooms,
   GetRHD,
+  GetJobTypes,
+  Requests,
 } from "../services/HttpClientService";
-import NativeSelect from "@mui/material/NativeSelect/NativeSelect";
+
+import { RequestsInterface } from "../models/IRequest";
+import { BuildingsInterface } from "../models/IBuilding";
+import { RoomsInterface } from "../models/IRoom";
+import { UsersInterface } from "../models/IUser";
+import { RHDsInterface } from "../models/IRHD";
+import { JobTypesInterface } from "../models/IJobType";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props, ref ) {
  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -38,12 +40,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props
 function RequestCreate() {
   const [user, setUser] = useState<UsersInterface>({});
   const [request, setRequest] = useState<RequestsInterface>({
-    Explan: "",
+    Explain: "",
     Date_Start: new Date(),
   });
   const [building, setBuilding] = useState<BuildingsInterface[]>([]);
   const [room, setRoom] = useState<RoomsInterface[]>([]);
   const [rhd, setRHD] = useState<RHDsInterface[]>([]);
+  const [jobtypes, setJobTypes] = useState<JobTypesInterface[]>([]);
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -64,12 +67,23 @@ function RequestCreate() {
     setError(false);
   };
 
-  const handleInputChange = (
-    event: React.ChangeEvent<{ id?: string; value: any }>
-  ) => {
+  const handleInputChange_Text = (
+      event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
     const id = event.target.id as keyof typeof request;
     const { value } = event.target;
-    // setRequest({ ...request, [id]: value });
+    setRequest({ ...request, [id]: value, });
+    console.log(`[${id}]: ${value}`);
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    const name = event.target.name as keyof typeof request;
+    const value = event.target.value;
+    setRequest({
+      ...request,
+      [name]: value,
+    });
+    console.log(`[${name}]: ${value}`);
   };
 
   const onChangeBuilding = async (e: SelectChangeEvent) =>{
@@ -97,26 +111,36 @@ function RequestCreate() {
     else{
       console.log("Load Device Incomplete!!!");
     }
-    console.log(rhd);
   }
 
-  const onChangeRHD = async (e: SelectChangeEvent) =>{
-    const id = e.target.value;
-    console.log(id);
-    // let res = await GetRHD(id);
-    // if (res) {
-    //   setRHD(res);
-    // }
-    // console.log("device");
-    // console.log(rhd);
-  }
+  // const onChangeRHD = async (e: SelectChangeEvent) =>{
+  //   const value = e.target.value;
+  //   console.log(value);
+  //   const name = e.target.name as keyof typeof request;
+  //   console.log("Load!!!");
+  //   console.log(`[${name}]: ${value}`);
+  // }
 
   const getUser = async () => {
     let res = await GetUser();
     if (res) {
       setUser(res);
+      console.log("Load User Complete");
     }
-    console.log(user.Name);
+    else{
+      console.log("Load User InComplete!!!!");
+    }
+  };
+
+  const getJobType = async () => {
+    let res = await GetJobTypes();
+    if (res) {
+      setJobTypes(res);
+      console.log("Load JobType Complete");
+    }
+    else{
+      console.log("Load JobType InComplete!!!!");
+    }
   };
 
   const getBuilding = async () => {
@@ -135,9 +159,28 @@ function RequestCreate() {
   useEffect(() => {
     getBuilding();
     getUser();
+    getJobType();
   }, []);
 
-  function submit() {}
+  async function submit() {
+    let data = {
+      Date_Start: request.Date_Start,
+      Explain: request.Explain,
+      
+      UserID: convertType(user.ID),
+      JobTypeID: convertType(request.JobTypeID),
+      Room_has_Device_ID: convertType(request.Room_has_Device_ID),
+
+    };
+
+    let res = await Requests(data);
+    console.log(res);
+    if (res) {
+      setSuccess(true);
+    } else {
+      setError(true);
+    }
+  }
 
 
   return (
@@ -157,33 +200,9 @@ function RequestCreate() {
            </Snackbar>
 
     <Paper>
-      {/* <Box display="flex" sx={{ marginTop: 2, }} >
-        <Box sx={{ paddingX: 2, paddingY: 1 }}>
-          <Typography component="h2" variant="h6" color="primary" gutterBottom >
-           Create Request
-          </Typography>
-        </Box>
-      </Box> */}
 
       <Divider />
-       <Grid container spacing={3} sx={{ padding: 2 }}>
-        {/*<Grid item xs={12}>
-          <FormControl fullWidth variant="outlined">
-          <p>ชื่อผู้แจ้ง</p>
-            <TextField
-              id="Name"
-              disabled
-              // inputProps={{
-              //   name: "UserID",
-              // }}
-              defaultValue={(user.Name)}
-              // onChange={handleInputChange}
-            />
-          </FormControl>
-        </Grid> */}
-       
-          
-        
+      <Grid container spacing={3} sx={{ padding: 2 }}>       
         <Grid item xs={6}>
           {/* <p>สถานที่ที่อุปกรณ์ชำรุด </p> */}
           <FormControl fullWidth variant="outlined">
@@ -235,13 +254,12 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">   
             <p>รหัสอุปกรณ์</p>
             <Select
-              defaultValue={"0"}
-              label="รหัสอุปกรณ์"
-              value={request.RHD_ID + ""}
-              onChange={onChangeRHD}
-              // inputProps={{
-              //   name: "RHDID",
-              // }}
+            defaultValue={"0"}
+              // value={request.RHD_ID + ""}
+              onChange={handleChange}
+              inputProps={{
+                name: "Room_has_Device_ID",
+              }}
             >
               <MenuItem value={"0"}>กรุณาเลือกรหัสอุปกรณ์</MenuItem>
                 {rhd?.map((item: RHDsInterface) => 
@@ -257,7 +275,63 @@ function RequestCreate() {
         </Grid>
 
         <Grid item xs={12}>
-          <Button component={RouterLink} to="/" variant="contained">
+          <FormControl fullWidth variant="outlined">
+          <p>อธิบายปัญหาแบบคร่าวๆ</p>
+            <TextField
+              id="Explain"
+              type="string"
+              inputProps={{
+                name: "Explain",
+              }}
+              value={request.Explain + ""}
+              onChange={handleInputChange_Text}
+            />
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12}>
+          <FormControl fullWidth variant="outlined">   
+            <p>เลือกประเภทงาน</p>
+            <Select
+              defaultValue={"0"}
+              onChange={handleChange}
+              inputProps={{
+                name: "JobTypeID",
+              }}
+            >
+              <MenuItem value={"0"}>กรุณาเลือกประเภทงาน</MenuItem>
+                {jobtypes?.map((item: JobTypesInterface) => 
+                  <MenuItem
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Name}
+                  </MenuItem>
+                )}
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={6}>
+          <FormControl fullWidth variant="outlined">
+            <p>วันที่และเวลา</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                value={request.Date_Start}
+                onChange={(newValue) => {
+                  setRequest({
+                    ...request,
+                    Date_Start: newValue,
+                  });
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Button component={RouterLink} to="/request" variant="contained">
             Back
           </Button>
           <Button

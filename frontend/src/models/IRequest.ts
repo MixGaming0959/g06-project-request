@@ -6,7 +6,7 @@ export interface RequestsInterface {
 
     ID?: number;
     Date_Start: Date | null;
-    Explan: string;
+    Explain?: string;
     
     UserID?: number;
     User?: UsersInterface;
@@ -14,7 +14,7 @@ export interface RequestsInterface {
     JobTypeID?: number;
     JobType?: JobTypesInterface;
 
-    RHD_ID?: number;
+    Room_has_Device_ID?: number;
     RHD?: RHDsInterface;
    
 }
