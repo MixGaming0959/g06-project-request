@@ -70,7 +70,7 @@ func GetRequest(c *gin.Context) {
 // GET /requests
 func ListRequests(c *gin.Context) {
 	var requests []entity.Request
-	if err := entity.DB().Preload("Room_has_Device").Raw("SELECT * FROM requests").Find(&requests).Error; err != nil {
+	if err := entity.DB().Preload("Room_has_Device").Preload("Room_has_Device.Device").Preload("Room_has_Device.Room").Preload("Room_has_Device.Room.Building").Raw("SELECT * FROM requests").Find(&requests).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
