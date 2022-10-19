@@ -63,9 +63,9 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
 
 	var r_user, r_tech, r_admin Role
-	db.Raw("SELECT * FROM roles WHERE name = ?", "user").Scan(&r_user)
-	db.Raw("SELECT * FROM roles WHERE name = ?", "tech").Scan(&r_tech)
-	db.Raw("SELECT * FROM roles WHERE name = ?", "admin").Scan(&r_admin)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "Tech").Scan(&r_tech)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
 
 	var position Position
 	db.Raw("SELECT * FROM Positions WHERE Position = ?", "A").Scan(&position)
@@ -81,7 +81,7 @@ func SetupDatabase() {
 	})
 
 	var user User
-	db.Raw("SELECT * FROM users WHERE email = ?", "test@gmail.com").Scan(&user)
+	db.Raw("SELECT * FROM users WHERE email = ?", "test").Scan(&user)
 
 	db.Model(&Building{}).Create(&Building{Name: "ตึกA"})
 	db.Model(&Building{}).Create(&Building{Name: "ตึกB"})
@@ -95,9 +95,44 @@ func SetupDatabase() {
 	db.Model(&Room{}).Create(&Room{Name: "ห้องA1", Building: buildingA})
 	db.Model(&Room{}).Create(&Room{Name: "ห้องB1", Building: buildingB})
 
+	var roomA, roomB Room
+	db.Raw("SELECT * FROM rooms WHERE name = ?", "ห้องA").Scan(&roomA)
+	db.Raw("SELECT * FROM rooms WHERE name = ?", "ห้องB").Scan(&roomB)
+
 	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมคอม"})
 	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมรถ"})
 
 	db.Model(&Device{}).Create(&Device{Name: "เครื่องA"})
+	db.Model(&Device{}).Create(&Device{Name: "เครื่องB"})
+	db.Model(&Device{}).Create(&Device{Name: "เครื่องA1"})
+	db.Model(&Device{}).Create(&Device{Name: "เครื่องB1"})
 
+	var deviceA, deviceB, deviceA1 Device
+	db.Raw("SELECT * FROM devices WHERE name = ?", "เครื่องA").Scan(&deviceA)
+	db.Raw("SELECT * FROM devices WHERE name = ?", "เครื่องB").Scan(&deviceB)
+	db.Raw("SELECT * FROM devices WHERE name = ?", "เครื่องA1").Scan(&deviceA1)
+
+	db.Model(&Status{}).Create(&Status{Name: "พร้อมใช้งาน"})
+
+	var status Status
+	db.Raw("SELECT * FROM statuses WHERE name = ?", "พร้อมใช้งาน").Scan(&status)
+
+	// db.Model(&Room_has_Device{}).Create(&Room_has_Device{
+	// 	User:   user,
+	// 	Device: deviceA,
+	// 	Room:   roomA,
+	// 	Status: status,
+	// })
+	// db.Model(&Room_has_Device{}).Create(&Room_has_Device{
+	// 	User:   user,
+	// 	Device: deviceB,
+	// 	Room:   roomA,
+	// 	Status: status,
+	// })
+	// db.Model(&Room_has_Device{}).Create(&Room_has_Device{
+	// 	User:   user,
+	// 	Device: deviceA1,
+	// 	Room:   roomB,
+	// 	Status: status,
+	// })
 }

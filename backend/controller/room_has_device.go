@@ -34,9 +34,9 @@ func GetRoom_has_Device(c *gin.Context) {
 
 // GET /room_has_device/room/:id
 func GetRHD_Device(c *gin.Context) {
-	var room_has_device entity.Room_has_Device
-	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM room_has_devices WHERE room_id", id).Scan(&room_has_device).Error; err != nil {
+	var room_has_device []entity.Room_has_Device
+	room_id := c.Param("id")
+	if err := entity.DB().Preload("Device").Raw("SELECT * FROM room_has_devices WHERE room_id = ?", room_id).Find(&room_has_device).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

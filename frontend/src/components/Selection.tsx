@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import { UsersInterface } from '../models/IUserMain';
+import { UsersInterface } from '../models/IUser';
 import { BuildingsInterface } from '../models/IBuilding';
 import { RoomsInterface } from '../models/IRoom';
 

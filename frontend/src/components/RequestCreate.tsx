@@ -36,7 +36,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props
 });
 
 function RequestCreate() {
-  const [user, setUser] = useState<UsersInterface[]>([]);
+  const [user, setUser] = useState<UsersInterface>({});
   const [request, setRequest] = useState<RequestsInterface>({
     Explan: "",
     Date_Start: new Date(),
@@ -47,8 +47,6 @@ function RequestCreate() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-
-
 
   const convertType = (data: string | number | undefined) => {
     let val = typeof data === "string" ? parseInt(data) : data;
@@ -79,24 +77,32 @@ function RequestCreate() {
     let res = await GetRooms(bid);
     if (res) {
       setRoom(res);
+      
+      console.log("Load Room Complete");
     }
-    console.log("room");
-    console.log(room);
+    else{
+      console.log("Load Room Incomplete!!!");
+    }
+    
   }
 
   const onChangeRoom = async (e: SelectChangeEvent) =>{
     const rid = e.target.value;
+    // console.log(rid);
     let res = await GetRHD(rid);
     if (res) {
-      setRoom(res);
+      setRHD(res);
+      console.log("Load Device Complete");
     }
-    console.log("device");
+    else{
+      console.log("Load Device Incomplete!!!");
+    }
     console.log(rhd);
   }
 
   const onChangeRHD = async (e: SelectChangeEvent) =>{
     const id = e.target.value;
-
+    console.log(id);
     // let res = await GetRHD(id);
     // if (res) {
     //   setRHD(res);
@@ -110,24 +116,26 @@ function RequestCreate() {
     if (res) {
       setUser(res);
     }
-    // console.log(user);
+    console.log(user.Name);
   };
 
   const getBuilding = async () => {
     let res = await GetBuildings();
     if (res) {
       setBuilding(res);
+      console.log("Load Building Complete");
     }
-    console.log("building");
-    console.log(building);
+    else{
+      console.log("Load Building InComplete!!!!");
+    }
+    
+    // console.log(building);
   };
 
   useEffect(() => {
     getBuilding();
     getUser();
   }, []);
-
-  console.log(user);
 
   function submit() {}
 
@@ -158,21 +166,21 @@ function RequestCreate() {
       </Box> */}
 
       <Divider />
-      <Grid container spacing={3} sx={{ padding: 2 }}>
-        <Grid item xs={12}>
+       <Grid container spacing={3} sx={{ padding: 2 }}>
+        {/*<Grid item xs={12}>
           <FormControl fullWidth variant="outlined">
           <p>ชื่อผู้แจ้ง</p>
             <TextField
               id="Name"
               disabled
-              inputProps={{
-                name: "UserID",
-              }}
-              defaultValue={"${user.Name}"}
+              // inputProps={{
+              //   name: "UserID",
+              // }}
+              defaultValue={(user.Name)}
               // onChange={handleInputChange}
             />
           </FormControl>
-        </Grid>
+        </Grid> */}
        
           
         
@@ -231,17 +239,17 @@ function RequestCreate() {
               label="รหัสอุปกรณ์"
               value={request.RHD_ID + ""}
               onChange={onChangeRHD}
-              inputProps={{
-                name: "RHD_ID",
-              }}
+              // inputProps={{
+              //   name: "RHDID",
+              // }}
             >
               <MenuItem value={"0"}>กรุณาเลือกรหัสอุปกรณ์</MenuItem>
-                {rhd.map((item: RHDsInterface) => 
+                {rhd?.map((item: RHDsInterface) => 
                   <MenuItem
                     key={item.ID}
                     value={item.ID}
                   >
-                    {item.ID}
+                    {item.Device.Name}
                   </MenuItem>
                 )}
             </Select>
