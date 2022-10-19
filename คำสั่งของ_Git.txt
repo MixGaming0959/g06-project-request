@@ -12,6 +12,7 @@ echo "# g06-project-request" >> README.md
     git branch -M main
     git push -u origin main
 
+คำสั่ง update ที่เรา เพิ่ม/ลบ/แก้ไข ลงไปใน git
 git add .
-git commit -m "comment"
+git commit -m "  #ใส่comment   "
 git push -u origin main
