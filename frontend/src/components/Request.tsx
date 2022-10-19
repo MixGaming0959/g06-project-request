@@ -28,25 +28,15 @@ function Requests() {
     { field: "ID", headerName: "ลำดับ", width: 50 },
     { field: "Date_Start", headerName: "วันที่อุปกรณ์พัง", width: 300 },
     { field: "Explain", headerName: "คำอธิบาย", width: 200 },
-    {
-      field: "Room_has_Device",
-      headerName: "รหัสอุปกรณ์",
-      width: 100,
-      valueFormatter: (params) => params.value.DeviceID,
-    },
-    {
-      field: "Room_has_Device",
-      headerName: "รหัสห้อง",
-      width: 100,
-      valueFormatter: (params) => params.value.RoomID,
-    },
 
   ];
 
   useEffect(() => {
     getRequests();
+    console.log(requests);
+
   }, []);
-  console.log(requests);
+  
   return (
     <div>
       <Container maxWidth="md">
