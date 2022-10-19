@@ -49,6 +49,29 @@ async function GetRequests() {
   return res;
 }
 
+async function GetRolebyUser() {
+  let uid = localStorage.getItem("uid");
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/role/user/${uid}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        localStorage.setItem("role_id", res.data.id);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+  return res;
+}
+
 async function GetUser() {
   let uid = localStorage.getItem("uid");
   const requestOptions = {
@@ -196,4 +219,5 @@ export {
   GetRHD,
   Requests,
   GetJobTypes,
+  GetRolebyUser,
 };
