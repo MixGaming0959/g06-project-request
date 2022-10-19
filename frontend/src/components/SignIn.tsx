@@ -14,7 +14,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
-import { Login } from "../services/HttpClientService";
+import { Login, GetRolebyUser } from "../services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -51,6 +51,7 @@ function SignIn() {
 
   const submit = async () => {
     let res = await Login(signin);
+    await GetRolebyUser();
     if (res) {
       setSuccess(true);
       setTimeout(() => {
