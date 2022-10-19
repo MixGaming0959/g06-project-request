@@ -72,7 +72,6 @@ func main() {
 
 			r.GET("/roles", controller.ListRoles)
 			r.GET("/role/:id", controller.GetRole) 
-			r.GET("/role/user/:id", controller.GetRolebyUser)
 			r.GET("/jobtypes", controller.ListJobTypes)
 			r.GET("/jobtype/:id", controller.GetJobType)
 		}
