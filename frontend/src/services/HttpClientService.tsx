@@ -58,12 +58,12 @@ async function GetRolebyUser() {
       "Content-Type": "application/json",
     },
   };
-
-  let res = await fetch(`${apiUrl}/role/user/${uid}`, requestOptions)
+  
+  let res = await fetch(`${apiUrl}/user/${uid}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        localStorage.setItem("role_id", res.data.id);
+        localStorage.setItem("role_id", res.data.Role.ID);
         return res.data;
       } else {
         return false;

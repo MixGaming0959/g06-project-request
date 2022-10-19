@@ -25,6 +25,7 @@ import Request from "./components/Request";
 import SignIn from "./components/SignIn";
 import Home from "./components/Home";
 import RequestCreate from "./components/RequestCreate";
+import UserCreate from "./components/UserCreate";
 
 const drawerWidth = 240;
 
@@ -77,15 +78,14 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "ข้อมูลการแจ้งซ่อม", icon: <PeopleIcon />, path: "/request" },
-  // { name: "การเข้าชมวีดีโอ", icon: <YouTubeIcon />, path: "/watch_videos" },
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",roleLevel:1 },
+  { name: "ข้อมูลการแจ้งซ่อม", icon: <PeopleIcon />, path: "/request",roleLevel:1 },
+  { name: "จองตารางงาน", icon: <PeopleIcon />, path: "/user/create",roleLevel:2 },
 ];
 
 const mdTheme = createTheme();
 
 export default function App() {
-  
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
@@ -137,7 +137,7 @@ return (
                 noWrap
                 sx={{ flexGrow: 1 }}
               >
-                System Analysis and Design 1/65
+                ระบบแจ้งซ่อมคอมพิวเตอร์
               </Typography>
               <Button color="inherit" onClick={signout}>
                 ออกจากระบบ
@@ -159,7 +159,9 @@ return (
             </Toolbar>
             <Divider />
             <List>
-              {menu.map((item, index) => (
+              {menu.map((item, index) => {
+                if(item.roleLevel <= parseInt(localStorage.getItem("role_id")+"")) {
+                  return (
                 <Link
                   to={item.path}
                   key={item.name}
@@ -170,7 +172,9 @@ return (
                     <ListItemText primary={item.name} />
                   </ListItem>
                 </Link>
-              ))}
+              )}
+              
+              })}
             </List>
           </Drawer>
           <Box
@@ -191,6 +195,7 @@ return (
                 <Route path="/" element={<Home />} />
                 <Route path="/request" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />
+                <Route path="/user/create" element={<UserCreate />} />
                 {/* <Route path="/user/create" element={<UserCreate />} />
                 <Route path="/watch_videos" element={<WatchVideos />} />
                 <Route
