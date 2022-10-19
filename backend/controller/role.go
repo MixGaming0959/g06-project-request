@@ -34,7 +34,7 @@ func GetRole(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": role})
 }
 
-// GET /user/:id
+// GET /role/user/:id
 func GetRolebyUser(c *gin.Context) {
 	var role entity.Role
 	// id := c.Param("id")
