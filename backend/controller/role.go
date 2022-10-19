@@ -34,6 +34,25 @@ func GetRole(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": role})
 }
 
+// GET /user/:id
+func GetRolebyUser(c *gin.Context) {
+	var role entity.Role
+	// id := c.Param("id")
+	// if err := entity.DB().Raw("SELECT * FROM users WHERE id = ?", id).Scan(&user).Error; err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+	// c.JSON(http.StatusOK, gin.H{"data": user})
+
+	uid := c.Param("id")
+	if err := entity.DB().Preload("User").Raw("SELECT * FROM roles WHERE user_id = ?", uid).Find(&role).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": role})
+}
+
 // GET /roles
 func ListRoles(c *gin.Context) {
 	var roles []entity.Role
