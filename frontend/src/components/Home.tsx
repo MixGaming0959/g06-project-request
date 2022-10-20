@@ -26,15 +26,32 @@ function Home() {
   
     <div> 
       `User Role Level: {user.Role?.Name} {user.Name}`
-      <Grid item xs={12}>
+      <Grid container spacing={3} sx={{ padding: 2 }}>       
+      
+        <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">
           <p>ชื่อ</p>
             <TextField
-              disabled
               value={user.Name || ""}
+              InputProps={{
+                readOnly: true,
+              }}
             />
           </FormControl>
         </Grid>
+        
+        <Grid item xs={6}>
+          <FormControl fullWidth variant="outlined">
+          <p>Email</p>
+            <TextField
+              value={user.Email || ""}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+          </FormControl>
+        </Grid>
+      </Grid>
     </div>
     
 
