@@ -1,4 +1,7 @@
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
 import React, {useState, useEffect} from 'react'
+import TextField from "@mui/material/TextField";
 import { UsersInterface } from "../models/IUser";
 import { GetUser, GetRolebyUser } from "../services/HttpClientService";
 
@@ -22,9 +25,18 @@ function Home() {
   return (
   
     <div> 
-      `User Role Level: {user.Role?.Name}`
+      `User Role Level: {user.Role?.Name} {user.Name}`
+      <Grid item xs={12}>
+          <FormControl fullWidth variant="outlined">
+          <p>ชื่อ</p>
+            <TextField
+              disabled
+              value={user.Name || ""}
+            />
+          </FormControl>
+        </Grid>
     </div>
-
+    
 
 
   )
