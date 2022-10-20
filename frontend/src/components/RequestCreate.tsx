@@ -208,6 +208,7 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">
             <p>ตึก</p>
             <Select
+              required
               defaultValue={"0"}
               onChange={ (onChangeBuilding) }
               inputProps={{
@@ -231,6 +232,7 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">   
             <p>ห้อง</p>
             <Select
+              required
               defaultValue={"0"}
               onChange={onChangeRoom}
               inputProps={{
@@ -254,7 +256,8 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">   
             <p>รหัสอุปกรณ์</p>
             <Select
-            defaultValue={"0"}
+              required
+              defaultValue={"0"}
               // value={request.RHD_ID + ""}
               onChange={handleChange}
               inputProps={{
@@ -278,6 +281,7 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">
           <p>อธิบายปัญหาแบบคร่าวๆ</p>
             <TextField
+              required
               id="Explain"
               type="string"
               inputProps={{
@@ -293,6 +297,7 @@ function RequestCreate() {
           <FormControl fullWidth variant="outlined">   
             <p>เลือกประเภทงาน</p>
             <Select
+              required
               defaultValue={"0"}
               onChange={handleChange}
               inputProps={{
