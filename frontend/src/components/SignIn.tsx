@@ -160,6 +160,7 @@ function SignIn() {
               </Button>
               <p>ฐานะผู้แจ้ง: test 123456</p>
               <p>ฐานะช่าง: test01 123456</p>
+              <p>ฐานะadmin: admin 123456</p>
             </Box>
           </Box>
         </Grid>
