@@ -1,8 +1,8 @@
 export interface RoomsInterface {
 
-    ID: number,
-    Name: string,
-    Location: string,
+    ID?: number,
+    Name?: string,
+    Location?: string,
     BuildingID?: number,
    
 }
