@@ -42,7 +42,6 @@ func ListJobTypes(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": JobTypes})
 }
 
-
 // DELETE /JobTypes/:id
 func DeleteJobType(c *gin.Context) {
 	id := c.Param("id")
@@ -70,4 +69,3 @@ func UpdateJobType(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": JobType})
 }
-
