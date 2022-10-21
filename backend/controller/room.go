@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
+
 // POST /rooms
 func CreateRoom(c *gin.Context) {
 	var room entity.Room
@@ -21,7 +21,7 @@ func CreateRoom(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
-*/
+
 
 // GET /room/:id
 func GetRoom(c *gin.Context) {
@@ -47,11 +47,6 @@ func GetRoomBuilding(c *gin.Context) {
 		return
 	}
 
-	// if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE building_id = ?", building_id).Find(&room).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 
@@ -65,7 +60,6 @@ func ListRooms(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": rooms})
 }
 
-/*
 // DELETE /rooms/:id
 func DeleteRoom(c *gin.Context) {
 	id := c.Param("id")
@@ -93,4 +87,3 @@ func UpdateRoom(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
-*/

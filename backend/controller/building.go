@@ -7,21 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
-// POST /carts
-func CreateCart(c *gin.Context) {
-	var cart entity.Cart
-	if err := c.ShouldBindJSON(&cart); err != nil {
+// POST /buildings
+func CreateBuilding(c *gin.Context) {
+	var building entity.Building
+	if err := c.ShouldBindJSON(&building); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if err := entity.DB().Create(&cart).Error; err != nil {
+	if err := entity.DB().Create(&building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": cart})
+	c.JSON(http.StatusOK, gin.H{"data": building})
 }
-*/
 
 // GET /Building
 func GetBuilding(c *gin.Context) {
@@ -44,32 +42,30 @@ func ListBuildings(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": buildings})
 }
 
-/*
-// DELETE /carts/:id
-func DeleteCart(c *gin.Context) {
+// DELETE /buildings/:id
+func DeleteBuilding(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM carts WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "cart not found"})
+	if tx := entity.DB().Exec("DELETE FROM buildings WHERE id = ?", id); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "building not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /carts
-func UpdateCart(c *gin.Context) {
-	var cart entity.Cart
-	if err := c.ShouldBindJSON(&cart); err != nil {
+// PATCH /buildings
+func UpdateBuilding(c *gin.Context) {
+	var building entity.Building
+	if err := c.ShouldBindJSON(&building); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", cart.ID).First(&cart); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "cart not found"})
+	if tx := entity.DB().Where("id = ?", building.ID).First(&building); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "building not found"})
 		return
 	}
-	if err := entity.DB().Save(&cart).Error; err != nil {
+	if err := entity.DB().Save(&building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": cart})
+	c.JSON(http.StatusOK, gin.H{"data": building})
 }
-*/

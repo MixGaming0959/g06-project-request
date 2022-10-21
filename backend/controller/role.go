@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
 // POST /roles
 func CreateRole(c *gin.Context) {
 	var role entity.Role
@@ -21,7 +20,6 @@ func CreateRole(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": role})
 }
-*/
 
 // GET /role/:id
 func GetRole(c *gin.Context) {
@@ -44,7 +42,6 @@ func ListRoles(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": roles})
 }
 
-/*
 // DELETE /roles/:id
 func DeleteRole(c *gin.Context) {
 	id := c.Param("id")
@@ -72,4 +69,3 @@ func UpdateRole(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": role})
 }
-*/

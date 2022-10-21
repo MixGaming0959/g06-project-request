@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
 // POST /genders
 func CreateGender(c *gin.Context) {
 	var gender entity.Gender
@@ -21,7 +20,6 @@ func CreateGender(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": gender})
 }
-*/
 
 // GET /gender/:id
 func GetGender(c *gin.Context) {
@@ -44,7 +42,6 @@ func ListGenders(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": genders})
 }
 
-/*
 // DELETE /genders/:id
 func DeleteGender(c *gin.Context) {
 	id := c.Param("id")
@@ -72,4 +69,4 @@ func UpdateGender(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": gender})
 }
-*/
+

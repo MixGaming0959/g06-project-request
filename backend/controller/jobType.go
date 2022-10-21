@@ -7,21 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-/*
 // POST /JobTypes
 func CreateJobType(c *gin.Context) {
 	var JobType entity.JobType
 	if err := c.ShouldBindJSON(&JobType); err != nil {
-		c.JSON(http.JobTypeBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	if err := entity.DB().Create(&JobType).Error; err != nil {
-		c.JSON(http.JobTypeBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.JobTypeOK, gin.H{"data": JobType})
+	c.JSON(http.StatusOK, gin.H{"data": JobType})
 }
-*/
 
 // GET /JobType/:id
 func GetJobType(c *gin.Context) {
@@ -44,32 +42,32 @@ func ListJobTypes(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": JobTypes})
 }
 
-/*
+
 // DELETE /JobTypes/:id
 func DeleteJobType(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM JobTypes WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.JobTypeBadRequest, gin.H{"error": "JobType not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "JobType not found"})
 		return
 	}
-	c.JSON(http.JobTypeOK, gin.H{"data": id})
+	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
 // PATCH /JobTypes
 func UpdateJobType(c *gin.Context) {
 	var JobType entity.JobType
 	if err := c.ShouldBindJSON(&JobType); err != nil {
-		c.JSON(http.JobTypeBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	if tx := entity.DB().Where("id = ?", JobType.ID).First(&JobType); tx.RowsAffected == 0 {
-		c.JSON(http.JobTypeBadRequest, gin.H{"error": "JobType not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "JobType not found"})
 		return
 	}
 	if err := entity.DB().Save(&JobType).Error; err != nil {
-		c.JSON(http.JobTypeBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.JobTypeOK, gin.H{"data": JobType})
+	c.JSON(http.StatusOK, gin.H{"data": JobType})
 }
-*/
+

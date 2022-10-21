@@ -49,7 +49,6 @@ type Room_has_Device struct {
 	StatusID *uint
 	Device   Device `gorm:"references:id"`
 	Room     Room   `gorm:"references:id"`
-	Status   Status `gorm:"references:id"`
 	User     User   `gorm:"references:id"`
 
 	Request []Request `gorm:"foreignkey:Room_has_Device_ID"`
@@ -57,8 +56,6 @@ type Room_has_Device struct {
 
 type Device struct {
 	gorm.Model
-
-	Name string
 
 	DistributorID *uint
 	TypeID        *uint
@@ -75,25 +72,26 @@ type Cart struct {
 	Started_At time.Time
 	Work_Date  time.Time
 
-	UserID    *uint
-	LevelID   *uint
-	RequestID *uint
-	HistoryID *uint
-	User      User     `gorm:"references:id"`
-	Level     Level    `gorm:"references:id"`
-	Request   Request  `gorm:"references:id"`
-	History   *History `gorm:"references:id"`
+	UserID     *uint
+	EstimateID *uint
+	RequestID  *uint
+
+	User     User     `gorm:"references:id"`
+	Estimate Estimate `gorm:"references:id"`
+	Request  Request  `gorm:"references:id"`
+
+	History *History `gorm:"foreignkey:CartID"`
 }
 
 type History struct {
 	gorm.Model
 
-	CartID  *uint
-	BillID  *uint
-	CauseID *uint
-	Cart    Cart  `gorm:"references:id"`
-	Bill    Bill  `gorm:"references:id"`
-	Cause   Cause `gorm:"references:id"`
+	CartID     *uint
+	UserID     *uint
+	DMGLevelID *uint
+	Cart       Cart     `gorm:"references:id"`
+	User       User     `gorm:"references:id"`
+	DMGLevel   DMGLevel `gorm:"references:id"`
 }
 
 type Role struct {
@@ -130,7 +128,7 @@ type Room struct {
 	BuildingID *uint
 	Building   Building `gorm:"references:id"`
 
-	Room_has_Device []Room_has_Device `gorm:"foreignkey:RoomID"`
+	Room_has_Device []*Room_has_Device `gorm:"foreignkey:RoomID"`
 }
 
 type Distributor struct {
@@ -148,22 +146,11 @@ type Brand struct {
 	Device []Device `gorm:"foreignkey:BrandID"`
 }
 
-type Status struct {
+type DMGLevel struct {
 	gorm.Model
-	Name string `gorm:"uniqueIndex"`
+	DMGLevel string
 
-	Room_has_Device []Room_has_Device `gorm:"foreignkey:StatusID"`
-}
-
-type Bill struct {
-	gorm.Model
-	Price float64
-}
-
-type Cause struct {
-	gorm.Model
-	Caused   string
-	Solution string
+	History []History `gorm:"foreignkey:DMGLevelID"`
 }
 
 type Type struct {
@@ -173,11 +160,11 @@ type Type struct {
 	Device []Device `gorm:"foreignkey:TypeID"`
 }
 
-type Level struct {
+type Estimate struct {
 	gorm.Model
 	Name string `gorm:"uniqueIndex"`
 
-	Cart []Cart `gorm:"foreignkey:LevelID"`
+	Cart []Cart `gorm:"foreignkey:EstimateID"`
 }
 
 type JobType struct {

@@ -31,19 +31,19 @@ func SetupDatabase() {
 		&Gender{},
 		&Position{},
 		&JobType{},
-		&Status{},
-		&Bill{},
-		&Cause{},
 		&Distributor{},
 		&Building{},
 		&Room{},
-
 		&User{},
 		&Device{},
 		&Room_has_Device{},
 		&Request{},
 		&Cart{},
 		&History{},
+		&DMGLevel{},
+		&Estimate{}, // 15
+		&Brand{},
+		&Type{},
 	)
 
 	db = database
@@ -57,6 +57,12 @@ func SetupDatabase() {
 	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
 	db.Model(&Position{}).Create(&Position{Position: "A"})
 	db.Model(&Position{}).Create(&Position{Position: "B"})
+	db.Model(&Distributor{}).Create(&Distributor{Name: "ร้านA", Location: ".."})
+	db.Model(&Distributor{}).Create(&Distributor{Name: "ร้านB", Location: ".."})
+	db.Model(&Brand{}).Create(&Brand{Name: "Brand A"})
+	db.Model(&Brand{}).Create(&Brand{Name: "Brand B"})
+	db.Model(&Type{}).Create(&Type{Name: "คอม"})
+	db.Model(&Type{}).Create(&Type{Name: "notebook"})
 
 	var male, female Gender
 	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
@@ -112,37 +118,59 @@ func SetupDatabase() {
 	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมคอม"})
 	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมรถ"})
 
-	db.Model(&Device{}).Create(&Device{Name: "เครื่องA"})
-	db.Model(&Device{}).Create(&Device{Name: "เครื่องB"})
-	db.Model(&Device{}).Create(&Device{Name: "เครื่องA1"})
-	db.Model(&Device{}).Create(&Device{Name: "เครื่องB1"})
+	var brandA, brandB Brand
+	db.Raw("SELECT * FROM brands WHERE name = ?", "Brand A").Scan(&brandA)
+	db.Raw("SELECT * FROM brands WHERE name = ?", "Brand B").Scan(&brandB)
+
+	var typeA, typeB Type
+	db.Raw("SELECT * FROM types WHERE name = ?", "คอม").Scan(&typeA)
+	db.Raw("SELECT * FROM types WHERE name = ?", "notebook").Scan(&typeB)
+
+	var distributoreA, distributoreB Distributor
+	db.Raw("SELECT * FROM Distributors WHERE name = ?", "ร้านA").Scan(&distributoreA)
+	db.Raw("SELECT * FROM Distributors WHERE name = ?", "ร้านB").Scan(&distributoreB)
+
+	db.Model(&Device{}).Create(&Device{
+		Brand:       brandA,
+		Type:        typeA,
+		Distributor: distributoreA,
+	})
+	db.Model(&Device{}).Create(&Device{
+		Brand:       brandB,
+		Type:        typeA,
+		Distributor: distributoreA,
+	})
+	db.Model(&Device{}).Create(&Device{
+		Brand:       brandA,
+		Type:        typeB,
+		Distributor: distributoreA,
+	})
+	db.Model(&Device{}).Create(&Device{
+		Brand:       brandA,
+		Type:        typeA,
+		Distributor: distributoreB,
+	})
 
 	var deviceA, deviceB, deviceA1 Device
-	db.Raw("SELECT * FROM devices WHERE name = ?", "เครื่องA").Scan(&deviceA)
-	db.Raw("SELECT * FROM devices WHERE name = ?", "เครื่องB").Scan(&deviceB)
-	db.Raw("SELECT * FROM devices WHERE name = ?", "เครื่องA1").Scan(&deviceA1)
+	db.Raw("SELECT * FROM devices WHERE id = ?", "1").Scan(&deviceA)
+	db.Raw("SELECT * FROM devices WHERE id = ?", "2").Scan(&deviceB)
+	db.Raw("SELECT * FROM devices WHERE id = ?", "3").Scan(&deviceA1)
 
-	db.Model(&Status{}).Create(&Status{Name: "พร้อมใช้งาน"})
+	db.Model(&Room_has_Device{}).Create(&Room_has_Device{
+		User:   user,
+		Device: deviceA,
+		Room:   roomA,
+	})
+	db.Model(&Room_has_Device{}).Create(&Room_has_Device{
+		User:   user,
+		Device: deviceB,
+		Room:   roomA,
+	})
+	db.Model(&Room_has_Device{}).Create(&Room_has_Device{
+		User:   user,
+		Device: deviceA1,
+		Room:   roomB,
+	})
 
-	var status Status
-	db.Raw("SELECT * FROM statuses WHERE name = ?", "พร้อมใช้งาน").Scan(&status)
-
-	// db.Model(&Room_has_Device{}).Create(&Room_has_Device{
-	// 	User:   user,
-	// 	Device: deviceA,
-	// 	Room:   roomA,
-	// 	Status: status,
-	// })
-	// db.Model(&Room_has_Device{}).Create(&Room_has_Device{
-	// 	User:   user,
-	// 	Device: deviceB,
-	// 	Room:   roomA,
-	// 	Status: status,
-	// })
-	// db.Model(&Room_has_Device{}).Create(&Room_has_Device{
-	// 	User:   user,
-	// 	Device: deviceA1,
-	// 	Room:   roomB,
-	// 	Status: status,
-	// })
+	// มีการ add ข้อมูล user RHD Device แค่นั้น (รวม Entityลูกด้วยนะ เช่น role Gender อะไรแบบนี้)
 }
