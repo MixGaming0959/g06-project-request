@@ -96,6 +96,16 @@ func SetupDatabase() {
 		Position:     position,
 	})
 
+	db.Model(&User{}).Create(&User{
+		Name:         "Admin",
+		Email:        "admin",
+		Phone_number: "0555555552",
+		Password:     string(password),
+		Role:         r_admin,
+		Gender:       male,
+		Position:     position,
+	})
+
 	var user User
 	db.Raw("SELECT * FROM users WHERE email = ?", "test").Scan(&user)
 
