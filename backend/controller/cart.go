@@ -35,7 +35,7 @@ func GetCart(c *gin.Context) {
 // GET /carts
 func ListCarts(c *gin.Context) {
 	var carts []entity.Cart
-	if err := entity.DB().Raw("SELECT * FROM carts").Scan(&carts).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Estimate").Preload("Request").Preload("Request.Room_has_Device").Raw("SELECT * FROM carts").Find(&carts).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

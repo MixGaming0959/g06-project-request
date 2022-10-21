@@ -63,6 +63,10 @@ func SetupDatabase() {
 	db.Model(&Brand{}).Create(&Brand{Name: "Brand B"})
 	db.Model(&Type{}).Create(&Type{Name: "คอม"})
 	db.Model(&Type{}).Create(&Type{Name: "notebook"})
+	db.Model(&Estimate{}).Create(&Estimate{Name: "การบำรุงรักษาโดยการซ่อมแซมส่วนที่เสีย"})
+	db.Model(&Estimate{}).Create(&Estimate{Name: "การบำรุงรักษาตามแผน"})
+	db.Model(&Estimate{}).Create(&Estimate{Name: "การบำรุงรักษาโดยการคาดคะเน"})
+	db.Model(&Estimate{}).Create(&Estimate{Name: "แนวคิดใหม่ในวงการบำรุงรักษา"})
 
 	var male, female Gender
 	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)

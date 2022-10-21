@@ -69,8 +69,7 @@ type Device struct {
 
 type Cart struct {
 	gorm.Model
-	Started_At time.Time
-	Work_Date  time.Time
+	Work_Date time.Time
 
 	UserID     *uint
 	EstimateID *uint
