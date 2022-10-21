@@ -28,6 +28,12 @@ function Requests() {
     { field: "ID", headerName: "ลำดับ", width: 50 },
     { field: "Date_Start", headerName: "วันที่อุปกรณ์พัง", width: 300 },
     { field: "Explain", headerName: "คำอธิบาย", width: 200 },
+    {
+      field: "Room_has_Device",
+      headerName: "...",
+      width: 150,
+      valueFormatter: (params) => params.value.RoomID,
+    },
 
   ];
 
