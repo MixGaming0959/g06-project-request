@@ -82,6 +82,7 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/",roleLevel:1 },
   { name: "ข้อมูลการแจ้งซ่อม", icon: <PeopleIcon />, path: "/requests",roleLevel:1 },
   { name: "จองตารางงาน", icon: <PeopleIcon />, path: "/carts",roleLevel:2 },
+  { name: "ประวัติการซ่อม", icon: <PeopleIcon />, path: "/historys",roleLevel:2 },
 ];
 
 const mdTheme = createTheme();
@@ -89,6 +90,7 @@ const mdTheme = createTheme();
 export default function App() {
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
+  const roleLevel = parseInt(localStorage.getItem("role_id")+"");
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -161,7 +163,7 @@ return (
             <Divider />
             <List>
               {menu.map((item, index) => {
-                if(item.roleLevel <= parseInt(localStorage.getItem("role_id")+"")) {
+                if(item.roleLevel <= roleLevel) {
                   return (
                 <Link
                   to={item.path}
