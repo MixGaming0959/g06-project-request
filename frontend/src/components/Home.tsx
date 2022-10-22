@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import React, {useState, useEffect} from 'react'
 import TextField from "@mui/material/TextField";
 import { UsersInterface } from "../models/IUser";
-import { GetUser, GetRolebyUser } from "../services/HttpClientService";
+import { GetUser } from "../services/HttpClientService";
 
 function Home() {
   const [user, setUser] = useState<UsersInterface>({});
@@ -25,7 +25,7 @@ function Home() {
   return (
   
     <div> 
-      `User Role Level: {user.Role?.Name} {user.Name}`
+      `User Role Level: {user.Role?.Name} `
       <Grid container spacing={3} sx={{ padding: 2 }}>       
       
         <Grid item xs={6}>

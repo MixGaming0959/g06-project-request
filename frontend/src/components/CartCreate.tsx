@@ -47,8 +47,8 @@ function CartCreate() {
     const [estimates, setEstimates] = useState<EstimateInterface[]>([]);
     const [room, setRoom] = useState<RoomsInterface>({});
     const [RHDs, setRHDs] = useState<RHDsInterface>({});
-    const [statusRequests, setJobTypes] = useState<JobTypesInterface[]>([]);
-    const [Device, setDevices] = useState<DevicesInterface[]>([]);
+    const [jobtypes, setJobTypes] = useState<JobTypesInterface[]>([]);
+    const [device, setDevices] = useState<DevicesInterface[]>([]);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const convertType = (data: string | number | undefined) => {
@@ -75,7 +75,7 @@ function CartCreate() {
       console.log("Load User InComplete!!!!");
     }
   };
-  const getEstimates = async () => {
+  const listEstimates = async () => {
     let res = await ListEstimates();
     if (res) {
       setEstimates(res);
@@ -85,14 +85,14 @@ function CartCreate() {
       console.log("Load Estimates InComplete!!!!");
     }
   };
-  const getRequests = async () => {
+  const listRequests = async () => {
     let res = await ListRequests();
     if (res) {
       setRequests(res);
-      console.log("Load Estimates Complete");
+      console.log("Load Request Complete");
     }
     else{
-      console.log("Load Estimates InComplete!!!!");
+      console.log("Load Request InComplete!!!!");
     }
   };
  
@@ -101,10 +101,10 @@ function CartCreate() {
     let res = await GetRequest(id);
     if (res) {
       setRequest(res);  
-      console.log("Load Room Complete");
+      console.log("Load Request ID Complete");
     }
     else{
-      console.log("Load Room Incomplete!!!");
+      console.log("Load Request ID Incomplete!!!");
     }
 
     id = res.ID;
@@ -142,8 +142,8 @@ function CartCreate() {
 
   useEffect(() => {
     getUser();
-    getEstimates();
-    getRequests();
+    listEstimates();
+    listRequests();
   }, []);
 
   async function submit() {
@@ -217,7 +217,7 @@ function CartCreate() {
       </Grid>
 
       <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">   
+          <FormControl fullWidth variant="outlined">     
             <p>รายการแจ้งซ่อม</p>
             <Select
               required
@@ -225,7 +225,6 @@ function CartCreate() {
               onChange={(e) => {
                 (handleChange(e));
                 onChangeRequest(e);
-              
               }}
               inputProps={{
                 name: "RequestID",

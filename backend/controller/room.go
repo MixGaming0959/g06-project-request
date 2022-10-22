@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
 // POST /rooms
 func CreateRoom(c *gin.Context) {
 	var room entity.Room
@@ -21,7 +20,6 @@ func CreateRoom(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
-
 
 // GET /room/:id
 func GetRoom(c *gin.Context) {
@@ -39,6 +37,7 @@ func GetRoom(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": room})
 }
+
 func GetRoomBuilding(c *gin.Context) {
 	var room []entity.Room
 	building_id := c.Param("id")

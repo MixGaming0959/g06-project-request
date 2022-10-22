@@ -16,6 +16,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
 
 import {
   ListBuildings,
@@ -182,6 +183,7 @@ function RequestCreate() {
     }
   }
 
+  const [age, setAge] = React.useState('');
 
   return (
   <Container maxWidth="md">
@@ -203,19 +205,17 @@ function RequestCreate() {
 
       <Divider />
       <Grid container spacing={3} sx={{ padding: 2 }}>       
-        <Grid item xs={6}>
-          {/* <p>สถานที่ที่อุปกรณ์ชำรุด </p> */}
-          <FormControl fullWidth variant="outlined">
-            <p>ตึก</p>
+        <Grid item xs={6} >
+          <p>ตึก</p>
+          <FormControl required fullWidth variant="outlined">
+            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
-              required
-              defaultValue={"0"}
+              labelId="BuildingID"
               onChange={ (onChangeBuilding) }
               inputProps={{
                 name: "BuildingID",
               }}
             >
-              <MenuItem  value={"0"}>กรุณาเลือกตึก</MenuItem>
                 {building.map((item: BuildingsInterface) => (
                   <MenuItem 
                     key={item.ID}
@@ -228,18 +228,18 @@ function RequestCreate() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">   
-            <p>ห้อง</p>
+        <Grid item xs={6} >
+          <p>ห้อง</p>
+          <FormControl required fullWidth variant="outlined"> 
+            <InputLabel id="Room_has_Device_ID">กรุณาเลือกห้อง</InputLabel>
             <Select
-              required
-              defaultValue={"0"}
+
+              labelId="Room_has_Device_ID"
               onChange={onChangeRoom}
               inputProps={{
                 name: "RoomID",
               }}
             >
-              <MenuItem value={"0"}>กรุณาเลือกห้อง</MenuItem>
                 {room?.map((item: RoomsInterface) => 
                   <MenuItem
                     key={item.ID}
@@ -252,19 +252,18 @@ function RequestCreate() {
           </FormControl>
         </Grid>
 
-        <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">   
-            <p>รหัสอุปกรณ์</p>
+        <Grid item xs={6} >
+          <p>รหัสอุปกรณ์</p>
+          <FormControl required fullWidth variant="outlined">   
+            <InputLabel id="Room_has_Device_ID">กรุณาเลือกรหัสอุปกรณ์</InputLabel>
             <Select
-              required
-              defaultValue={"0"}
-              // value={request.RHD_ID + ""}
+              labelId="Room_has_Device_ID"
               onChange={handleChange}
               inputProps={{
                 name: "Room_has_Device_ID",
               }}
             >
-              <MenuItem value={"0"}>กรุณาเลือกรหัสอุปกรณ์</MenuItem>
+              <MenuItem value={"0"}></MenuItem>
                 {rhd?.map((item: RHDsInterface) => 
                   <MenuItem
                     key={item.ID}
@@ -284,6 +283,7 @@ function RequestCreate() {
               required
               id="Explain"
               type="string"
+              label="อธิบายปัญหาแบบคร่าวๆ"
               inputProps={{
                 name: "Explain",
               }}
@@ -294,12 +294,12 @@ function RequestCreate() {
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth variant="outlined">   
+          <FormControl required  fullWidth variant="outlined">   
             <p>เลือกประเภทงาน</p>
             <Select
-              // disabled
-              defaultValue={"0"}
+              //defaultValue={"0"}
               onChange={handleChange}
+              label="เลือกประเภทงาน *"
               inputProps={{
                 name: "JobTypeID",
               }}
@@ -334,7 +334,7 @@ function RequestCreate() {
             </LocalizationProvider>
           </FormControl>
         </Grid>
-
+          
         <Grid item xs={12}>
           <Button component={RouterLink} to="/requests" variant="contained">
             Back
@@ -350,6 +350,7 @@ function RequestCreate() {
         </Grid>
 
       </Grid>
+      
     </Paper>
   </Container>
 

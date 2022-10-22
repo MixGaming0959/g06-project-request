@@ -21,7 +21,7 @@ func CreateBrand(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": brand})
 }
 
-// GET /Brand
+// GET /brand
 func GetBrand(c *gin.Context) {
 	var brand entity.Brand
 	id := c.Param("id")
@@ -32,7 +32,7 @@ func GetBrand(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": brand})
 }
 
-// GET /Brands
+// GET /brands
 func ListBrands(c *gin.Context) {
 	var brands []entity.Brand
 	if err := entity.DB().Raw("SELECT * FROM brands").Scan(&brands).Error; err != nil {
@@ -42,7 +42,7 @@ func ListBrands(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": brands})
 }
 
-// DELETE /brands/:id
+// DELETE /brand/:id
 func DeleteBrand(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM brands WHERE id = ?", id); tx.RowsAffected == 0 {
