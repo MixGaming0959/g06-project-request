@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { UsersInterface } from "../models/IUser";
-import { GetUser, GetRolebyUser, GetEstimates, GetRequests,GetRequest,GetOnlyRHD, GetOnlyBuilding, GetOnlyRoom, Carts } from "../services/HttpClientService";
+import { GetUser, GetRolebyUser, ListEstimates, ListRequests,GetRequest,GetRHD, GetBuilding, GetRoom, CreateCart } from "../services/HttpClientService";
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -76,7 +76,7 @@ function CartCreate() {
     }
   };
   const getEstimates = async () => {
-    let res = await GetEstimates();
+    let res = await ListEstimates();
     if (res) {
       setEstimates(res);
       console.log("Load Estimates Complete");
@@ -86,7 +86,7 @@ function CartCreate() {
     }
   };
   const getRequests = async () => {
-    let res = await GetRequests();
+    let res = await ListRequests();
     if (res) {
       setRequests(res);
       console.log("Load Estimates Complete");
@@ -108,7 +108,7 @@ function CartCreate() {
     }
 
     id = res.ID;
-    res = await GetOnlyRHD(id);
+    res = await GetRHD(id);
     if (res) {
       setRHDs(res);
       
@@ -118,7 +118,7 @@ function CartCreate() {
       console.log("Load RHD Incomplete!!!");
     }
     id = res.RoomID;
-    res = await GetOnlyRoom(id);
+    res = await GetRoom(id);
     if (res) {
       setRoom(res);
       
@@ -128,7 +128,7 @@ function CartCreate() {
       console.log("Load Room Incomplete!!!");
     }
     id = res.BuildingID;
-    res = await GetOnlyBuilding(id);
+    res = await GetBuilding(id);
     if (res) {
       setBuilding(res);
 
@@ -155,7 +155,7 @@ function CartCreate() {
 
     };
 
-    let res = await Carts(data);
+    let res = await CreateCart(data);
     console.log(res);
     if (res) {
       setSuccess(true);

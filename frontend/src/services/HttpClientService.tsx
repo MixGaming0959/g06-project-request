@@ -28,7 +28,7 @@ async function Login(data: SigninInterface) {
   return res;
 }
 
-async function GetRequests() {
+async function ListRequests() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -95,7 +95,7 @@ async function GetUser() {
   return res;
 }
 
-async function GetRooms(bid: any) {
+async function ListRoombyBuildings(bid: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -118,7 +118,7 @@ async function GetRooms(bid: any) {
   return res;
 }
 
-async function GetBuildings() {
+async function ListBuildings() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -140,7 +140,7 @@ async function GetBuildings() {
   return res;
 }
 
-async function GetJobTypes() {
+async function ListJobTypes() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -162,7 +162,7 @@ async function GetJobTypes() {
   return res;
 }
 
-async function GetRHD(rid: any) {
+async function ListRHDsbyRoom(rid: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -188,7 +188,7 @@ async function GetRHD(rid: any) {
   return res;
 }
 
-async function Requests(data: RequestsInterface) {
+async function CreateRequest(data: RequestsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -211,7 +211,7 @@ async function Requests(data: RequestsInterface) {
   return res;
 }
 
-async function GetCarts() {
+async function ListCarts() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -233,7 +233,7 @@ async function GetCarts() {
   return res;
 }
 
-async function Carts(data: CartsInterface) {
+async function CreateCart(data: CartsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -256,7 +256,7 @@ async function Carts(data: CartsInterface) {
   return res;
 }
 
-async function GetEstimates() {
+async function ListEstimates() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -299,7 +299,7 @@ async function GetRequest(id: any) {
 
   return res;
 }
-async function GetOnlyRHD(id: any) {
+async function GetRHD(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -321,7 +321,7 @@ async function GetOnlyRHD(id: any) {
 
   return res;
 }
-async function GetOnlyBuilding(id: any) {
+async function GetBuilding(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -342,7 +342,7 @@ async function GetOnlyBuilding(id: any) {
 
   return res;
 }
-async function GetOnlyRoom(id: any) {
+async function GetRoom(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -369,18 +369,18 @@ async function GetOnlyRoom(id: any) {
 export {
   Login,
   GetUser,
-  GetRequests,
-  GetRooms,
-  GetBuildings,
-  GetRHD,
-  Requests,
-  GetJobTypes,
+  ListRequests,
+  ListRoombyBuildings,
+  ListBuildings,
+  ListRHDsbyRoom,
+  CreateRequest,
+  ListJobTypes,
   GetRolebyUser,
-  GetEstimates,
-  Carts,
-  GetCarts,
+  ListEstimates,
+  CreateCart,
+  ListCarts,
   GetRequest,
-  GetOnlyRHD,
-  GetOnlyBuilding,
-  GetOnlyRoom,
+  GetRHD,
+  GetBuilding,
+  GetRoom,
 };

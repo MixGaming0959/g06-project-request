@@ -18,12 +18,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import MenuItem from "@mui/material/MenuItem";
 
 import {
-  GetBuildings,
+  ListBuildings,
   GetUser,
-  GetRooms,
-  GetRHD,
-  GetJobTypes,
-  Requests,
+  ListRoombyBuildings,
+  ListRHDsbyRoom,
+  ListJobTypes,
+  CreateRequest,
 } from "../services/HttpClientService";
 
 import { RequestsInterface } from "../models/IRequest";
@@ -88,7 +88,7 @@ function RequestCreate() {
 
   const onChangeBuilding = async (e: SelectChangeEvent) =>{
     const bid = e.target.value;
-    let res = await GetRooms(bid);
+    let res = await ListRoombyBuildings(bid);
     if (res) {
       setRoom(res);
       
@@ -103,7 +103,7 @@ function RequestCreate() {
   const onChangeRoom = async (e: SelectChangeEvent) =>{
     const rid = e.target.value;
     // console.log(rid);
-    let res = await GetRHD(rid);
+    let res = await ListRHDsbyRoom(rid);
     if (res) {
       setRHD(res);
       console.log("Load Device Complete");
@@ -133,7 +133,7 @@ function RequestCreate() {
   };
 
   const getJobType = async () => {
-    let res = await GetJobTypes();
+    let res = await ListJobTypes();
     if (res) {
       setJobType(res);
       console.log("Load JobType Complete");
@@ -144,7 +144,7 @@ function RequestCreate() {
   };
 
   const getBuilding = async () => {
-    let res = await GetBuildings();
+    let res = await ListBuildings();
     if (res) {
       setBuilding(res);
       console.log("Load Building Complete");
@@ -173,7 +173,7 @@ function RequestCreate() {
 
     };
 
-    let res = await Requests(data);
+    let res = await CreateRequest(data);
     console.log(res);
     if (res) {
       setSuccess(true);

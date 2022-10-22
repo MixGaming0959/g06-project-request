@@ -5,13 +5,13 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { GetCarts } from "../services/HttpClientService";
+import { ListCarts } from "../services/HttpClientService";
 import { CartsInterface } from "../models/ICart";
 function Carts() {
   const [carts, setcarts] = useState<CartsInterface[]>([]);
 
   const getCarts = async () => {
-    let res = await GetCarts();
+    let res = await ListCarts();
     if (res) {
       setcarts(res);
     }
