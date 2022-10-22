@@ -108,7 +108,6 @@ async function ListRoombyBuildings(bid: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -178,7 +177,6 @@ async function ListRHDsbyRoom(rid: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -290,7 +288,6 @@ async function GetRequest(id: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -312,7 +309,6 @@ async function GetRHD(id: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -333,7 +329,6 @@ async function GetBuilding(id: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
         return res.data;
       } else {
         return false;
@@ -354,8 +349,7 @@ async function GetRoom(id: any) {
   let res = await fetch(`${apiUrl}/room/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        console.log(res.data);
+      if (res.data) { 
         return res.data;
       } else {
         return false;
