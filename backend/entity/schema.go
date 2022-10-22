@@ -16,9 +16,10 @@ type User struct {
 	RoleID     *uint
 	GenderID   *uint
 	PositionID *uint
-	Role       Role     `gorm:"references:id"`
-	Gender     Gender   `gorm:"references:id"`
-	Position   Position `gorm:"references:id"`
+
+	Role     Role     `gorm:"references:id"`
+	Gender   Gender   `gorm:"references:id"`
+	Position Position `gorm:"references:id"`
 
 	Request         []Request          `gorm:"foreignkey:UserID"`
 	Cart            []Cart             `gorm:"foreignkey:UserID"`
@@ -33,9 +34,10 @@ type Request struct {
 	UserID             *uint
 	JobTypeID          *uint
 	Room_has_Device_ID *uint
-	User               User            `gorm:"references:id"`
-	Room_has_Device    Room_has_Device `gorm:"references:id"`
-	JobType            JobType         `gorm:"references:id"`
+
+	User            User            `gorm:"references:id"`
+	Room_has_Device Room_has_Device `gorm:"references:id"`
+	JobType         JobType         `gorm:"references:id"`
 
 	Cart *Cart `gorm:"foreignkey:RequestID"`
 }
@@ -46,10 +48,10 @@ type Room_has_Device struct {
 	UserID   *uint
 	DeviceID *uint
 	RoomID   *uint
-	StatusID *uint
-	Device   Device `gorm:"references:id"`
-	Room     Room   `gorm:"references:id"`
-	User     User   `gorm:"references:id"`
+
+	Device Device `gorm:"references:id"`
+	Room   Room   `gorm:"references:id"`
+	User   User   `gorm:"references:id"`
 
 	Request []Request `gorm:"foreignkey:Room_has_Device_ID"`
 }
@@ -60,9 +62,10 @@ type Device struct {
 	DistributorID *uint
 	TypeID        *uint
 	BrandID       *uint
-	Distributor   Distributor `gorm:"references:id"`
-	Type          Type        `gorm:"references:id"`
-	Brand         Brand       `gorm:"references:id"`
+
+	Distributor Distributor `gorm:"references:id"`
+	Type        Type        `gorm:"references:id"`
+	Brand       Brand       `gorm:"references:id"`
 
 	Room_has_Device []*Room_has_Device `gorm:"foreignkey:DeviceID"`
 }
@@ -88,9 +91,10 @@ type History struct {
 	CartID     *uint
 	UserID     *uint
 	DMGLevelID *uint
-	Cart       Cart     `gorm:"references:id"`
-	User       User     `gorm:"references:id"`
-	DMGLevel   DMGLevel `gorm:"references:id"`
+
+	Cart     Cart     `gorm:"references:id"`
+	User     User     `gorm:"references:id"`
+	DMGLevel DMGLevel `gorm:"references:id"`
 }
 
 type Role struct {
