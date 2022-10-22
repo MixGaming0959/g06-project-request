@@ -29,6 +29,21 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [type, setType] = useState("password");
+
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChangeChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+    console.log(checked);
+    if (!checked) {
+      setType("text");
+    }
+    else{
+      setType("password");
+    }
+  };
+
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -139,15 +154,19 @@ function SignIn() {
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={type}//"password"
                 id="Password"
                 autoComplete="current-password"
                 value={signin.Password || ""}
                 onChange={handleInputChange}
               />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="primary"/>}
                 label="Remember me"
+              />
+              <FormControlLabel
+                control={<Checkbox checked={checked} value="remember" color="primary" onChange={handleChangeChecked}/>}
+                label="Show Password"
               />
               <Button
                 type="submit"
