@@ -20,8 +20,13 @@ import Button from "@mui/material/Button";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
-import Request from "./components/Request";
+import ComputerIcon from '@mui/icons-material/Computer';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import RoomIcon from '@mui/icons-material/Room';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import HistoryIcon from '@mui/icons-material/History';
 
+import Request from "./components/Request";
 import SignIn from "./components/SignIn";
 import Home from "./components/Home";
 import RequestCreate from "./components/RequestCreate";
@@ -29,6 +34,12 @@ import CartCreate from "./components/CartCreate";
 import Cart from "./components/Cart";
 import HistoryCreate from "./components/HistoryCreate";
 import History from "./components/History";
+import RHDCreate from "./components/RHDCreate";
+import RHD from "./components/RHD";
+import DeviceCreate from "./components/DeviceCreate";
+import Devices from "./components/Devices";
+import UserCreate from "./components/UserCreate";
+import User from "./components/User";
 
 const drawerWidth = 240;
 
@@ -82,9 +93,12 @@ const Drawer = styled(MuiDrawer, {
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/",roleLevel:1 },
-  { name: "ข้อมูลการแจ้งซ่อม", icon: <PeopleIcon />, path: "/requests",roleLevel:1 },
-  { name: "จองตารางงาน", icon: <PeopleIcon />, path: "/carts",roleLevel:2 },
-  { name: "ประวัติการซ่อม", icon: <PeopleIcon />, path: "/histories",roleLevel:2 },
+  { name: "ข้อมูลการแจ้งซ่อม", icon: <TextSnippetIcon />, path: "/requests",roleLevel:1 },
+  { name: "จองตารางงาน", icon: <AddShoppingCartIcon />, path: "/carts",roleLevel:2 },
+  { name: "ประวัติการซ่อม", icon: <HistoryIcon />, path: "/histories",roleLevel:2 },
+  { name: "ระบุอุปกรณ์เข้าห้อง", icon: <RoomIcon />, path: "/room_has_devices",roleLevel:3 },
+  { name: "ลงทะเบียนอุปกรณ์", icon: <ComputerIcon />, path: "/devices",roleLevel:3 },
+  { name: "ลงทะเบียนสมาชิก", icon: <PeopleIcon />, path: "/users",roleLevel:3 },
 ];
 
 const mdTheme = createTheme();
@@ -206,7 +220,16 @@ return (
                 <Route path="/carts" element={<Cart />} />
 
                 <Route path="/history/create" element={<HistoryCreate />} />
-                <Route path="/histories" element={<History />} />
+                <Route path="/histories" element={<History />} /> 
+
+                <Route path="/room_has_device/create" element={<RHDCreate />} />
+                <Route path="/room_has_devices" element={<RHD />} />
+
+                <Route path="/device/create" element={<DeviceCreate />} />
+                <Route path="/devices" element={<Devices />} />
+
+                <Route path="/user/create" element={<UserCreate />} />
+                <Route path="/users" element={<User />} />
                 
               </Routes> 
             </Container>
