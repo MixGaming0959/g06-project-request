@@ -1,4 +1,6 @@
+import { GendersInterface } from "./IGender";
 import { HistorysInterface } from "./IHistory";
+import { PositionsInterface } from "./IPosition";
 import { RolesInterface } from "./IRole";
 
 export interface UsersInterface {
@@ -11,8 +13,11 @@ export interface UsersInterface {
 
     PositionID?: string;
     RoleID?: string;
-    Role?: RolesInterface;
     GenderID?: string;
 
-    History?:HistorysInterface;
+    Role?: RolesInterface;
+    Gender?: GendersInterface;
+    Position?: PositionsInterface
+
+    // History?:HistorysInterface;
 }
