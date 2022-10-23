@@ -25,7 +25,7 @@ func CreateCart(c *gin.Context) {
 func GetCart(c *gin.Context) {
 	var cart entity.Cart
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM carts WHERE id = ?", id).Scan(&cart).Error; err != nil {
+	if err := entity.DB().Preload("Request").Preload("Estimate").Preload("User").Raw("SELECT * FROM carts WHERE id = ?", id).Find(&cart).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -35,7 +35,7 @@ func GetCart(c *gin.Context) {
 // GET /carts
 func ListCarts(c *gin.Context) {
 	var carts []entity.Cart
-	if err := entity.DB().Preload("User").Preload("Estimate").Preload("Request").Preload("Request.Room_has_Device").Raw("SELECT * FROM carts").Find(&carts).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Estimate").Preload("Request").Preload("History").Preload("Request.Room_has_Device").Raw("SELECT * FROM carts").Find(&carts).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

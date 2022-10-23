@@ -60,7 +60,7 @@ func CreateRequest(c *gin.Context) {
 func GetRequest(c *gin.Context) {
 	var request entity.Request
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM requests WHERE id = ?", id).Scan(&request).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("JobType").Preload("Room_has_Device").Raw("SELECT * FROM requests WHERE id = ?", id).Find(&request).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

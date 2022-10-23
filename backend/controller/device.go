@@ -25,7 +25,7 @@ func CreateDevice(c *gin.Context) {
 func GetDevice(c *gin.Context) {
 	var device entity.Device
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM devices WHERE id = ?", id).Scan(&device).Error; err != nil {
+	if err := entity.DB().Preload("Type").Preload("Brand").Preload("Distributor").Raw("SELECT * FROM devices WHERE id = ?", id).Find(&device).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
