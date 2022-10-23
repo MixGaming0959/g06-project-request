@@ -1,5 +1,5 @@
 export interface TypesInterface {
-    ID?: string,
+    ID?: number,
     Name?: string,
 }
   

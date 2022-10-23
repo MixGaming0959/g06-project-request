@@ -1,5 +1,5 @@
 export interface DistributorsInterface {
-    ID?: string,
+    ID?: number,
     Name?: string,
 }
   

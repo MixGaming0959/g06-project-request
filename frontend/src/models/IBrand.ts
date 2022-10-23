@@ -1,5 +1,5 @@
 export interface BrandsInterface {
-    ID?: string,
+    ID?: number,
     Name?: string,
 }
   
