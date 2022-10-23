@@ -67,6 +67,9 @@ func SetupDatabase() {
 	db.Model(&Estimate{}).Create(&Estimate{Name: "การบำรุงรักษาตามแผน"})
 	db.Model(&Estimate{}).Create(&Estimate{Name: "การบำรุงรักษาโดยการคาดคะเน"})
 	db.Model(&Estimate{}).Create(&Estimate{Name: "แนวคิดใหม่ในวงการบำรุงรักษา"})
+	db.Model(&DMGLevel{}).Create(&DMGLevel{DMGLevel: "ซ่อมได้"})
+	db.Model(&DMGLevel{}).Create(&DMGLevel{DMGLevel: "ต้องเปลี่ยนอุปกรณ์บางส่วน"})
+	db.Model(&DMGLevel{}).Create(&DMGLevel{DMGLevel: "ไม่สามารถซ่อมได้"})
 
 	var male, female Gender
 	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
@@ -186,5 +189,5 @@ func SetupDatabase() {
 		Room:   roomB,
 	})
 
-	// มีการ add ข้อมูล user RHD Device แค่นั้น (รวม Entityลูกด้วยนะ เช่น role Gender อะไรแบบนี้)
+	// มีการ add ข้อมูล user RHD Device แค่นั้น (รวม Entityลูกด้วยนะ เช่น role Gender DMGLevel อะไรแบบนี้)
 }
