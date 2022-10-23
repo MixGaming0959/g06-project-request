@@ -8,12 +8,12 @@ export interface UsersInterface {
     ID?: number,
     Name?: string;
     Email?: string;
-    Phone_number?: string;
+    Phonenumber?: string;
     Password?: string;
 
-    PositionID?: string;
-    RoleID?: string;
-    GenderID?: string;
+    PositionID?: number;
+    RoleID?: number;
+    GenderID?: number;
 
     Role?: RolesInterface;
     Gender?: GendersInterface;
