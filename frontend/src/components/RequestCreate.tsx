@@ -5,8 +5,6 @@ import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -14,7 +12,6 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 
@@ -33,6 +30,7 @@ import { RoomsInterface } from "../models/IRoom";
 import { UsersInterface } from "../models/IUser";
 import { RHDsInterface } from "../models/IRHD";
 import { JobTypesInterface } from "../models/IJobType";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props, ref ) {
  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -114,14 +112,6 @@ function RequestCreate() {
     }
   }
 
-  // const onChangeRHD = async (e: SelectChangeEvent) =>{
-  //   const value = e.target.value;
-  //   console.log(value);
-  //   const name = e.target.name as keyof typeof request;
-  //   console.log("Load!!!");
-  //   console.log(`[${name}]: ${value}`);
-  // }
-
   const getUser = async () => {
     let res = await GetUser();
     if (res) {
@@ -153,8 +143,6 @@ function RequestCreate() {
     else{
       console.log("Load Building InComplete!!!!");
     }
-    
-    // console.log(building);
   };
 
   useEffect(() => {
@@ -183,8 +171,6 @@ function RequestCreate() {
     }
   }
 
-  const [age, setAge] = React.useState('');
-
   return (
   <Container maxWidth="md">
            <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}
@@ -207,78 +193,79 @@ function RequestCreate() {
       <Grid container spacing={3} sx={{ padding: 2 }}>       
         <Grid item xs={6} >
           <p>ตึก</p>
-          <FormControl required fullWidth variant="outlined">
+          <FormControl required fullWidth >
             <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
               labelId="BuildingID"
+              label="กรุณาเลือกตึก *"
               onChange={ (onChangeBuilding) }
               inputProps={{
                 name: "BuildingID",
               }}
             >
-                {building.map((item: BuildingsInterface) => (
-                  <MenuItem 
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                ))}
+              {building.map((item: BuildingsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={6} >
           <p>ห้อง</p>
-          <FormControl required fullWidth variant="outlined"> 
-            <InputLabel id="Room_has_Device_ID">กรุณาเลือกห้อง</InputLabel>
+          <FormControl required fullWidth> 
+            <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
             <Select
-
-              labelId="Room_has_Device_ID"
+              labelId="RoomID"
+              label="กรุณาเลือกห้อง *"
               onChange={onChangeRoom}
               inputProps={{
                 name: "RoomID",
               }}
             >
-                {room?.map((item: RoomsInterface) => 
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
+              {room?.map((item: RoomsInterface) => 
+                <MenuItem
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Name}
+                </MenuItem>
+              )}
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={6} >
           <p>รหัสอุปกรณ์</p>
-          <FormControl required fullWidth variant="outlined">   
+          <FormControl required fullWidth >   
             <InputLabel id="Room_has_Device_ID">กรุณาเลือกรหัสอุปกรณ์</InputLabel>
             <Select
               labelId="Room_has_Device_ID"
+              label="กรุณาเลือกรหัสอุปกรณ์ *"
               onChange={handleChange}
               inputProps={{
                 name: "Room_has_Device_ID",
               }}
             >
-              <MenuItem value={"0"}></MenuItem>
-                {rhd?.map((item: RHDsInterface) => 
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.ID}
-                  </MenuItem>
-                )}
+              {rhd?.map((item: RHDsInterface) => 
+                <MenuItem
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.ID}
+                </MenuItem>
+              )}
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl fullWidth variant="outlined">
           <p>อธิบายปัญหาแบบคร่าวๆ</p>
+          <FormControl fullWidth >
             <TextField
               required
               id="Explain"
@@ -294,34 +281,35 @@ function RequestCreate() {
         </Grid>
 
         <Grid item xs={12}>
-          <FormControl required  fullWidth variant="outlined">   
-            <p>เลือกประเภทงาน</p>
+          <p>เลือกประเภทงาน</p>
+          <FormControl required fullWidth>  
+            <InputLabel id="JobTypeID">เลือกประเภทงาน</InputLabel> 
             <Select
-              //defaultValue={"0"}
+              labelId="JobTypeID"
               onChange={handleChange}
               label="เลือกประเภทงาน *"
               inputProps={{
                 name: "JobTypeID",
               }}
             >
-              <MenuItem value={"0"}>กรุณาเลือกประเภทงาน</MenuItem>
-                {JobType?.map((item: JobTypesInterface) => 
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
+              {JobType?.map((item: JobTypesInterface) => 
+                <MenuItem
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Name}
+                </MenuItem>
+              )}
             </Select>
           </FormControl>
         </Grid>
 
         <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">
-            <p>วันที่และเวลา</p>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
+          <p>วันที่และเวลา</p>
+          <FormControl fullWidth > 
+            <LocalizationProvider required dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรุณาเลือกวันและเวลา *"
                 value={request.Date_Start}
                 onChange={(newValue) => {
                   setRequest({
