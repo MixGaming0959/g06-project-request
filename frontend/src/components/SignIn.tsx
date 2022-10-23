@@ -64,11 +64,16 @@ function SignIn() {
     setError(false);
   };
 
+  function onClick() {
+    alert('You clicked me!');
+  }
+
   const submit = async () => {
     let res = await Login(signin);
-    let tmp = await GetRolebyUser();
+    
     if (res) {
       setSuccess(true);
+      let tmp = await GetRolebyUser();
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -118,7 +123,7 @@ function SignIn() {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={8} square>
           <Box
             sx={{
               my: 8,
@@ -168,21 +173,47 @@ function SignIn() {
                 control={<Checkbox checked={checked} value="remember" color="primary" onChange={handleChangeChecked}/>}
                 label="Show Password"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={submit}
-              >
-                Sign In
-              </Button>
-              <p>ฐานะผู้แจ้ง: test 123456</p>
-              <p>ฐานะช่าง: test01 123456</p>
-              <p>ฐานะadmin: admin 123456</p>
+              <Grid container spacing={3} sx={{ padding: 2 }}>
+                <Grid item xs={12}  >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={submit}
+                  > 
+                    Sign In
+                  </Button>
+                </Grid>
+
+                {/* <Grid item xs={6}  >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={submit}
+                  > 
+                    Sign In
+                  </Button>
+                </Grid>
+                <html>
+                  <button onClick={onClick}>
+
+                  </button>
+                </html> */}
+
+              </Grid>
+              
+              <p>ฐานะผู้แจ้ง: user@gmail.com 123456</p>
+              <p>ฐานะช่าง: tech@gmail.com 123456</p>
+              <p>ฐานะadmin: admin@gmail.com 123456</p>
+              
             </Box>
+            
           </Box>
         </Grid>
+        
       </Grid>
     </ThemeProvider>
   );
