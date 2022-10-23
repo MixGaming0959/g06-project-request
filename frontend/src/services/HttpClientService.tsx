@@ -3,6 +3,7 @@ import { SigninInterface } from "../models/ISignin";
 import { UsersInterface } from "../models/IUser";
 import { RequestsInterface } from "../models/IRequest";
 import { CartsInterface } from "../models/ICart";
+import { HistorysInterface } from "../models/IHistory";
 
 const apiUrl = "http://localhost:8080";
 
@@ -275,6 +276,7 @@ async function ListEstimates() {
 
   return res;
 }
+
 async function GetRequest(id: any) {
   const requestOptions = {
     method: "GET",
@@ -296,6 +298,7 @@ async function GetRequest(id: any) {
 
   return res;
 }
+
 async function GetRHD(id: any) {
   const requestOptions = {
     method: "GET",
@@ -317,6 +320,7 @@ async function GetRHD(id: any) {
 
   return res;
 }
+
 async function GetBuilding(id: any) {
   const requestOptions = {
     method: "GET",
@@ -337,6 +341,7 @@ async function GetBuilding(id: any) {
 
   return res;
 }
+
 async function GetRoom(id: any) {
   const requestOptions = {
     method: "GET",
@@ -359,7 +364,94 @@ async function GetRoom(id: any) {
   return res;
 }
 
+async function GetCart(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
 
+  let res = await fetch(`${apiUrl}/cart/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+} 
+async function CreateHistory(data: HistorysInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/histories`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListDMGlevels() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/dmglevels`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListHistories() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/histories`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 export {
   Login,
   GetUser,
@@ -377,4 +469,8 @@ export {
   GetRHD,
   GetBuilding,
   GetRoom,
+  GetCart,
+  CreateHistory,
+  ListDMGlevels,
+  ListHistories,
 };
