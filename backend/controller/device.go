@@ -35,7 +35,7 @@ func GetDevice(c *gin.Context) {
 // GET /devices
 func ListDevices(c *gin.Context) {
 	var devices []entity.Device
-	if err := entity.DB().Raw("SELECT * FROM devices").Scan(&devices).Error; err != nil {
+	if err := entity.DB().Preload("Type").Preload("Brand").Preload("Distributor").Raw("SELECT * FROM devices").Find(&devices).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

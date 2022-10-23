@@ -25,7 +25,7 @@ func CreateType(c *gin.Context) {
 func GetType(c *gin.Context) {
 	var typeX entity.Type
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM typeXs WHERE id = ?", id).Scan(&typeX).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM types WHERE id = ?", id).Scan(&typeX).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -35,7 +35,7 @@ func GetType(c *gin.Context) {
 // GET /Types
 func ListTypes(c *gin.Context) {
 	var typeXs []entity.Type
-	if err := entity.DB().Raw("SELECT * FROM typeXs").Scan(&typeXs).Error; err != nil {
+	if err := entity.DB().Raw("SELECT * FROM types").Scan(&typeXs).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -45,7 +45,7 @@ func ListTypes(c *gin.Context) {
 // DELETE /typeXs/:id
 func DeleteType(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM typeXs WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM types WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "typeX not found"})
 		return
 	}

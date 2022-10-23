@@ -35,7 +35,7 @@ func GetHistory(c *gin.Context) {
 // GET /histories
 func ListHistorys(c *gin.Context) {
 	var histories []entity.History
-	if err := entity.DB().Preload("User").Preload("Cart").Preload("Cart.Request").Preload("Cart.Request.User").Preload("DMGLevel").Raw("SELECT * FROM histories").Find(&histories).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("DMGLevel").Preload("Cart").Preload("Cart.User").Preload("Cart.Estimate").Preload("Cart.Request").Preload("Cart.Request.User").Preload("Cart.Request.JobType").Preload("Cart.Request.Room_has_Device").Preload("Cart.Request.Room_has_Device.Device").Preload("Cart.Request.Room_has_Device.Device.Type").Preload("Cart.Request.Room_has_Device.Device.Brand").Preload("Cart.Request.Room_has_Device.Device.Distributor").Preload("Cart.Request.Room_has_Device.Room").Preload("Cart.Request.Room_has_Device.Room.Building").Raw("SELECT * FROM histories").Find(&histories).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
