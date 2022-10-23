@@ -8,10 +8,10 @@ import (
 
 type User struct {
 	gorm.Model
-	Name         string
-	Email        string `gorm:"uniqueIndex"`
-	Phone_number string `gorm:"uniqueIndex"`
-	Password     string `json:"-"`
+	Name        string
+	Email       string `gorm:"uniqueIndex"`
+	Phonenumber string `gorm:"uniqueIndex"`
+	Password    string `json:"-"`
 
 	RoleID     *uint
 	GenderID   *uint
@@ -112,8 +112,8 @@ type Gender struct {
 // หน้าที่ทับซ่อมกับ Role หรือเปล่า ?
 type Position struct {
 	gorm.Model
-	Position string `gorm:"uniqueIndex"`
-	User     []User `gorm:"foreignkey:PositionID"`
+	Name string `gorm:"uniqueIndex"`
+	User []User `gorm:"foreignkey:PositionID"`
 }
 
 type Building struct {
