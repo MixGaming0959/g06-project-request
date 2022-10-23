@@ -1,4 +1,6 @@
 import { DevicesInterface } from "./IDevice";
+import { RoomsInterface } from "./IRoom";
+import { UsersInterface } from "./IUser";
 
 export interface RHDsInterface {
 
@@ -6,7 +8,9 @@ export interface RHDsInterface {
     
     UserID?: number,
     DeviceID?: number,
-    Device?: DevicesInterface;
     RoomID?: number,
-    StatusID?: number,
+    
+    Device?: DevicesInterface;
+    User?: UsersInterface;
+    Room?: RoomsInterface;
 }
