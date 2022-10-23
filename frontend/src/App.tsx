@@ -27,6 +27,8 @@ import Home from "./components/Home";
 import RequestCreate from "./components/RequestCreate";
 import CartCreate from "./components/CartCreate";
 import Cart from "./components/Cart";
+import HistoryCreate from "./components/HistoryCreate";
+import History from "./components/History";
 
 const drawerWidth = 240;
 
@@ -82,7 +84,7 @@ const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/",roleLevel:1 },
   { name: "ข้อมูลการแจ้งซ่อม", icon: <PeopleIcon />, path: "/requests",roleLevel:1 },
   { name: "จองตารางงาน", icon: <PeopleIcon />, path: "/carts",roleLevel:2 },
-  { name: "ประวัติการซ่อม", icon: <PeopleIcon />, path: "/historys",roleLevel:2 },
+  { name: "ประวัติการซ่อม", icon: <PeopleIcon />, path: "/histories",roleLevel:2 },
 ];
 
 const mdTheme = createTheme();
@@ -196,11 +198,15 @@ return (
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Routes>
                 <Route path="/" element={<Home />} />
+
                 <Route path="/requests" element={<Request />} />
                 <Route path="/request/create" element={<RequestCreate />} />
-                {/* <Route path="/user/create" element={<UserCreate />} /> */}
+
                 <Route path="/cart/create" element={<CartCreate />} />
                 <Route path="/carts" element={<Cart />} />
+
+                <Route path="/history/create" element={<HistoryCreate />} />
+                <Route path="/histories" element={<History />} />
                 
               </Routes> 
             </Container>
