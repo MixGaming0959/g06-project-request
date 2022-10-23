@@ -151,7 +151,7 @@ type Brand struct {
 
 type DMGLevel struct {
 	gorm.Model
-	DMGLevel string
+	DMGLevel string `gorm:"uniqueIndex"`
 
 	History []History `gorm:"foreignkey:DMGLevelID"`
 }
