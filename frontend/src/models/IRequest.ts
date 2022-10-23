@@ -17,10 +17,10 @@ export interface RequestsInterface {
     JobType?: JobTypesInterface;
 
     Room_has_Device_ID?: number;
-    RHD?: RHDsInterface;
+    Room_has_Device?: RHDsInterface;
 
     Cart?: CartsInterface;
-    History?: HistorysInterface;
+    // History?: HistorysInterface;
 
    
 }
