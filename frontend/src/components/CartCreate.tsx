@@ -152,7 +152,7 @@ function CartCreate() {
   async function submit() {
     let data = {
       Work_Date: cart.Work_Date,
-      UserID: convertType(cart.UserID),
+      UserID: convertType(user.ID),
       EstimateID: convertType(cart.EstimateID),
       RequestID: convertType(cart.RequestID),
 
@@ -292,9 +292,8 @@ function CartCreate() {
 
           <Grid item xs={6}>
             <p>ประเภทการซ่อมบำรุง</p>
-            <FormControl fullWidth variant="outlined">   
+            <FormControl required fullWidth variant="outlined">   
               <Select
-                required
                 defaultValue={"0"}
                 onChange={handleChange}
                 inputProps={{
