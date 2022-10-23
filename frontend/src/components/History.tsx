@@ -10,7 +10,7 @@ import { HistorysInterface } from "../models/IHistory";
 
 function History() {
   const [histories, setHistories] = useState<HistorysInterface[]>([]);
-
+  const header = [ "ID", "ชื่อคนบันทึก", "ชื่อช่าง", "ชื่อคนแจ้ง", "ระดับความเสียหาย", "ประเภทงาน", "ตึก", "ห้อง", "ประเภทอุปกรณ์", "ยี่ห้อ", "ร้านที่ซื้อ"];
   const listHistory = async () => {
     let res = await ListHistories();
     if (res) {
@@ -62,6 +62,29 @@ function History() {
     listHistory();
   }, []);
 
+  const DisplayData=histories?.map(
+    (info)=>{
+        return(
+            <tr>
+                <td>{info.ID}</td>
+                <td>{info?.User?.Name}</td> {/*ชื่อคนบันทึก*/}
+                <td>{info?.Cart?.User?.Name}</td> {/*ชื่อช่าง*/}
+                <td>{info?.Cart?.Request?.User?.Name}</td> {/*ชื่อคนแจ้ง*/}
+                <td>{info?.DMGLevel?.DMGLevel}</td>
+                <td>{info?.Cart?.Request?.JobType?.Name}</td> {/*ประเภทงาน*/}
+                <td>{info?.Cart?.Request?.Room_has_Device?.Room?.Building?.Name}</td>
+                <td>{info?.Cart?.Request?.Room_has_Device?.Room?.Name}</td>
+                <td>{info?.Cart?.Request?.Room_has_Device?.Device?.Type?.Name}</td>
+                <td>{info?.Cart?.Request?.Room_has_Device?.Device?.Brand?.Name}</td>
+                <td>{info?.Cart?.Request?.Room_has_Device?.Device?.Distributor?.Name}</td>
+                
+            </tr>
+        )
+    }
+)
+
+
+    
   return (
     <div>
       <Container maxWidth="md">
@@ -92,7 +115,7 @@ function History() {
             </Button>
           </Box>
         </Box>
-        <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
+        {/* <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
           <DataGrid
             rows={histories}
             getRowId={(row) => row.ID}
@@ -100,7 +123,53 @@ function History() {
             pageSize={5}
             rowsPerPageOptions={[5]}
           />
-        </div>
+        </div> */}
+  <style>{`
+    table {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #bebebe;}
+    tr:hover {background-color: #ddd;}
+
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #666;
+      color: white;
+    }
+
+  `}</style>
+        <table>
+          <thead>
+              <tr>
+                {header.map(head => <th>{head}</th>)}
+                {/* <th>ID</th>
+                <th>ชื่อคนบันทึก</th>
+                <th>ชื่อช่าง</th>
+                <th>ชื่อคนแจ้ง</th>
+                <th>ระดับความเสียหาย</th>
+                <th>ประเภทงาน</th>
+                <th>ตึก</th>
+                <th>ห้อง</th> 
+                <th>ประเภทอุปกรณ์</th>
+                <th>ยี่ห้อ</th>
+                <th>ร้านที่ซื้อ</th> */}
+              </tr>
+          </thead>
+          <tbody>
+              {DisplayData}
+          </tbody>
+        </table>
+
       </Container>
     </div>
   );
