@@ -57,11 +57,11 @@ func main() {
 			r.DELETE("/devices/:id", controller.DeleteDevice)
 
 			// History Routes 6
-			r.GET("/historys", controller.ListHistorys)
+			r.GET("/histories", controller.ListHistorys)
 			r.GET("/history/:id", controller.GetHistory)
-			r.POST("/historys", controller.CreateHistory)
-			r.PATCH("/historys", controller.UpdateHistory)
-			r.DELETE("/historys/:id", controller.DeleteHistory)
+			r.POST("/histories", controller.CreateHistory)
+			r.PATCH("/histories", controller.UpdateHistory)
+			r.DELETE("/histories/:id", controller.DeleteHistory)
 
 			// Building Routes 7
 			r.GET("/buildings", controller.ListBuildings)
