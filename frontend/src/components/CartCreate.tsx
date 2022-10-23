@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from 'react';
-// import logo from './logo.svg';
-// import './App.css';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { UsersInterface } from "../models/IUser";
-import { GetUser, GetRolebyUser, ListEstimates, ListRequests,GetRequest,GetRHD, GetBuilding, GetRoom, CreateCart } from "../services/HttpClientService";
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -33,37 +25,48 @@ import { Link as RouterLink } from "react-router-dom";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from '@mui/material/Snackbar';
 
+import { 
+  GetUser, 
+  ListEstimates, ListRequests,
+  GetRequest,GetRHD, GetBuilding, 
+  GetRoom, CreateCart 
+} from "../services/HttpClientService";
+import Divider from '@mui/material/Divider';
+
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props, ref ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
  });
+
 function CartCreate() {
-    const [user, setUser] = useState<UsersInterface>({});
-    const [cart, setCart] = useState<CartsInterface>({
-      Work_Date: new Date(),
-    });
-    const [Requests, setRequests] = useState<RequestsInterface[]>([]);
-    const [request, setRequest] = useState<RequestsInterface>({});
-    const [building, setBuilding] = useState<BuildingsInterface>({});
-    const [estimates, setEstimates] = useState<EstimateInterface[]>([]);
-    const [room, setRoom] = useState<RoomsInterface>({});
-    const [RHDs, setRHDs] = useState<RHDsInterface>({});
-    const [jobtypes, setJobTypes] = useState<JobTypesInterface[]>([]);
-    const [device, setDevices] = useState<DevicesInterface[]>([]);
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
-    const convertType = (data: string | number | undefined) => {
-    let val = typeof data === "string" ? parseInt(data) : data;
-    return val;
+  const [user, setUser] = useState<UsersInterface>({});
+  const [cart, setCart] = useState<CartsInterface>({
+    Work_Date: new Date(),
+  });
+  const [requests, setRequests] = useState<RequestsInterface[]>([]);
+  const [request, setRequest] = useState<RequestsInterface>({});
+  
+  const [building, setBuilding] = useState<BuildingsInterface>({});
+  const [estimates, setEstimates] = useState<EstimateInterface[]>([]);
+  const [room, setRoom] = useState<RoomsInterface>({});
+  const [RHDs, setRHDs] = useState<RHDsInterface>({});
+  const [jobtypes, setJobTypes] = useState<JobTypesInterface[]>([]);
+  const [device, setDevices] = useState<DevicesInterface[]>([]);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  const convertType = (data: string | number | undefined) => {
+  let val = typeof data === "string" ? parseInt(data) : data;
+  return val;
   };
   const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSuccess(false);
-    setError(false);
+  event?: React.SyntheticEvent | Event,
+  reason?: string
+) => {
+  if (reason === "clickaway") {
+    return;
+  }
+  setSuccess(false);
+  setError(false);
   };
   const getUser = async () => {
     let res = await GetUser();
@@ -95,7 +98,7 @@ function CartCreate() {
       console.log("Load Request InComplete!!!!");
     }
   };
- 
+
   const onChangeRequest = async (e: SelectChangeEvent) =>{
     let id = e.target.value;
     let res = await GetRequest(id);
@@ -177,12 +180,12 @@ function CartCreate() {
   return (
     <div>
     <Container maxWidth="md">
-    <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}
+            <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}
              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-           >
-             <Alert onClose={handleClose} severity="success">
+            >
+              <Alert onClose={handleClose} severity="success">
                บันทึกข้อมูลสำเร็จ
-             </Alert>
+              </Alert>
            </Snackbar>
 
            <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
@@ -191,150 +194,159 @@ function CartCreate() {
              </Alert>
            </Snackbar>
       <Paper>
-        <Box
-          display={"flex"}
-          sx={{
-            marginTop: 2 ,
-            paddingX : 2,
-            paddingY : 1,
-          }}
-        >
-          <h2>บันทึกการจองตารางงาน</h2>
+
+        <Box flexGrow={1}>
+          <Paper>
+            <Box sx = {{paddingX : 2,paddingY : 2}}>
+              <Typography
+                component="h5"
+                variant="h5"
+                color="primary"
+                gutterBottom
+              >
+                บันทึกการจองตารางงาน
+              </Typography>
+            </Box>
+          </Paper>
+              <Divider />
         </Box>
-        <hr />
+
         <Grid container spacing={3} sx={{ padding: 2 }}>       
-      
-      <Grid item xs={12}>
-        <FormControl fullWidth variant="outlined">
-        <p>ชื่อ</p>
-          <TextField
-            value={user.Name || ""}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-        </FormControl>
-      </Grid>
-
-      <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">     
-            <p>รายการแจ้งซ่อม</p>
-            <Select
-              required
-              defaultValue={"0"}
-              onChange={(e) => {
-                (handleChange(e));
-                onChangeRequest(e);
-              }}
-              inputProps={{
-                name: "RequestID",
-              }}
-            >
-              <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
-                {Requests?.map((item: RequestsInterface) => {
-                  console.log(item.Cart);
-                  if (item.Cart == null) {
-                  return(<MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.ID}
-                  </MenuItem>)
-                  }
-                })}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={6}>
-        <FormControl fullWidth variant="outlined">
-        <p>รายละเอียดการแจ้งซ่อม</p>
-          <TextField
-            value={request?.Explain || ""}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-        </FormControl>
-      </Grid>
-      <Grid item xs={6}>
-        <FormControl fullWidth variant="outlined">
-        <p>ห้อง</p>
-          <TextField
-            value={room?.Name || ""}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-        </FormControl>
-      </Grid>
-
-      <Grid item xs={6}>
-        <FormControl fullWidth variant="outlined">
-        <p>ตึก</p>
-          <TextField
-            value={building?.Name || ""}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-        </FormControl>
-      </Grid>
-
-        <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">   
-            <p>ประเภทการซ่อมบำรุง</p>
-            <Select
-              required
-              defaultValue={"0"}
-              onChange={handleChange}
-              inputProps={{
-                name: "EstimateID",
-              }}
-            >
-              <MenuItem value={"0"}>กรุณาเลือกประเภทการซ่อมบำรุง</MenuItem>
-                {estimates?.map((item: EstimateInterface) => 
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">
-            <p>วันที่ออกไปปฏิบัติงาน</p>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                value={cart.Work_Date}
-                onChange={(newValue) => {
-                  setCart({
-                    ...cart,
-                    Work_Date: newValue,
-                  });
+          <Grid item xs={12}>
+            <p>ชื่อ</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                value={user.Name || ""}
+                InputProps={{
+                  readOnly: true,
                 }}
-                renderInput={(params) => <TextField {...params} />}
               />
-            </LocalizationProvider>
-          </FormControl>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">     
+              <p>รายการแจ้งซ่อม</p>
+              <Select
+                required
+                defaultValue={"0"}
+                onChange={(e) => {
+                  (handleChange(e));
+                  onChangeRequest(e);
+                }}
+                inputProps={{
+                  name: "RequestID",
+                }}
+              >
+                <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
+                  {requests?.map((item: RequestsInterface) => {
+                    console.log(item.Cart);
+                    if (item.Cart == null) {
+                    return(<MenuItem
+                      key={item.ID}
+                      value={item.ID}
+                    >
+                      {item.ID}
+                    </MenuItem>)
+                    }
+                  })}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <p>รายละเอียดการแจ้งซ่อม</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                value={request?.Explain || ""}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <p>ห้อง</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                value={room?.Name || ""}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <p>ตึก</p>
+            <FormControl fullWidth variant="outlined">
+              <TextField
+                value={building?.Name || ""}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <p>ประเภทการซ่อมบำรุง</p>
+            <FormControl fullWidth variant="outlined">   
+              <Select
+                required
+                defaultValue={"0"}
+                onChange={handleChange}
+                inputProps={{
+                  name: "EstimateID",
+                }}
+              >
+                <MenuItem value={"0"}>กรุณาเลือกประเภทการซ่อมบำรุง</MenuItem>
+                  {estimates?.map((item: EstimateInterface) => 
+                    <MenuItem
+                      key={item.ID}
+                      value={item.ID}
+                    >
+                      {item.Name}
+                    </MenuItem>
+                  )}
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <p>วันที่ออกไปปฏิบัติงาน</p>
+            <FormControl fullWidth variant="outlined">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                  value={cart.Work_Date}
+                  onChange={(newValue) => {
+                    setCart({
+                      ...cart,
+                      Work_Date: newValue,
+                    });
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button component={RouterLink} to="/carts" variant="contained">
+              Back
+            </Button>
+            <Button
+              style={{ float: "right" }}
+              onClick={submit}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+          </Grid> 
+          
         </Grid>
-        <Grid item xs={12}>
-          <Button component={RouterLink} to="/carts" variant="contained">
-            Back
-          </Button>
-          <Button
-            style={{ float: "right" }}
-            onClick={submit}
-            variant="contained"
-            color="primary"
-          >
-            Submit
-          </Button>
-        </Grid> 
-      </Grid>
       </Paper>
     </Container>
     </div>
