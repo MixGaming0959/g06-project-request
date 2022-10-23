@@ -4,11 +4,11 @@ echo "# g06-project-request" >> README.md
     git add README.md
     git commit -m "first commit"
     git branch -M main
-    git remote add origin https://github.com/***/g06-project-request.git
+    git remote add origin https://github.com/ชื่อ github/***.git
     git push -u origin main
 
 …or push an existing repository from the command line
-    git remote add origin https://github.com/***/g06-project-request.git
+    git remote add origin https://github.comชื่อ github/***.git
     git branch -M main
     git push -u origin main
 
