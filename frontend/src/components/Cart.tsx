@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -14,13 +14,24 @@ function Carts() {
     let res = await ListCarts();
     if (res) {
       setcarts(res);
+      console.log(res);
     }
   };
   
 
   const columns: GridColDef[] = [
     { field: "ID", headerName: "ลำดับ", width: 50 },
-    { field: "Work_Date", headerName: "รายการจองเวลางาน", width: 300 },
+    { 
+      field: "Work_Date", headerName: "รายการจองเวลางาน", width: 300, 
+      type: 'dateTime',
+      valueGetter: ({ value }) => value && new Date(value),
+    },
+    {
+      field: "User",
+      headerName: "ชื่อช่าง",
+      width: 200,
+      valueFormatter: (params) => params.value.Name,
+    },
     {
       field: "Estimate",
       headerName: "ประเภทการซ่อมบำรุง",
