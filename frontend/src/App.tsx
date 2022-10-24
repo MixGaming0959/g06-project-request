@@ -179,7 +179,7 @@ return (
             <Divider />
             <List>
               {menu.map((item, index) => {
-                if(item.roleLevel <= roleLevel) {
+                if(item.roleLevel == roleLevel) {
                   return (
                 <Link
                   to={item.path}
