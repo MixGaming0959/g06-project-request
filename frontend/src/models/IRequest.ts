@@ -2,7 +2,6 @@ import { UsersInterface } from "./IUser";
 import { JobTypesInterface } from "./IJobType";
 import { RHDsInterface } from "./IRHD";
 import { CartsInterface } from "./ICart";
-import { HistorysInterface } from "./IHistory";
 
 export interface RequestsInterface {
 
@@ -20,7 +19,5 @@ export interface RequestsInterface {
     Room_has_Device?: RHDsInterface;
 
     Cart?: CartsInterface;
-    // History?: HistorysInterface;
-
    
 }

@@ -92,7 +92,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",roleLevel:1 },
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/",roleLevel:0 },
   { name: "ข้อมูลการแจ้งซ่อม", icon: <TextSnippetIcon />, path: "/requests",roleLevel:1 },
   { name: "จองตารางงาน", icon: <AddShoppingCartIcon />, path: "/carts",roleLevel:2 },
   { name: "ประวัติการซ่อม", icon: <HistoryIcon />, path: "/histories",roleLevel:2 },
@@ -179,7 +179,7 @@ return (
             <Divider />
             <List>
               {menu.map((item, index) => {
-                if(item.roleLevel == roleLevel) {
+                if((item.roleLevel == roleLevel) || item.roleLevel == 0) {
                   return (
                 <Link
                   to={item.path}

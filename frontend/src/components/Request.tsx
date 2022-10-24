@@ -16,13 +16,6 @@ function Requests() {
       setRequests(res);
     }
   };
-  
-//   const columns: GridColDef[] = [
-//     { field: "ID", headerName: "ลำดับ", width: 100 },
-//     { field: "Date_Start", headerName: "วันที่อุปกรณ์พัง", width: 300 },
-//     { field: "Explain", headerName: "คำอธิบาย", width: 200 },
-//     { field: "Room_has_Device.DeviceID", headerName: "ชื่ออุปกรณ์", width: 200 },
-//   ];
 
   const columns: GridColDef[] = [
     { field: "ID", headerName: "ลำดับ", width: 50 },
