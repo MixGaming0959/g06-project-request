@@ -35,6 +35,7 @@ import {
 
 
 function HistoryCreate() {
+  const uid = parseInt(localStorage.getItem("uid") as string);
   const [history,setHistory] = useState<HistorysInterface>({});
   const [cause,setCause] = useState<string>("");
   const [solution,setSolution] = useState<string>("");
@@ -232,7 +233,7 @@ function HistoryCreate() {
                     >
                       <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
                       {carts?.map((item: CartsInterface) => {
-                        if (item.History == null) {
+                        if (item.History == null && uid == item.UserID) {
                         return(
                         <MenuItem
                           key={item.ID}
