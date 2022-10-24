@@ -14,10 +14,10 @@ import { UsersInterface } from "../models/IUser";
 import { GendersInterface } from "../models/IGender";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { CreateUser, ListGenders, ListPositions, ListRoles } from "../services/HttpClientService";
+import { CreateUser, ListGenders, ListEducational_backgrounds, ListRoles } from "../services/HttpClientService";
 import React, { useEffect, useState } from "react";
 import { RolesInterface } from "../models/IRole";
-import { PositionsInterface } from "../models/IPosition";
+import { Educational_backgroundInterface } from "../models/IEducational_background";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -33,7 +33,7 @@ function UserCreate() {
   const [error, setError] = React.useState(false);
   const [gender, setGender] = React.useState<GendersInterface[]>([]);
   const [role, setRole] = React.useState<GendersInterface[]>([]);
-  const [position, setPosition] = React.useState<GendersInterface[]>([]);
+  const [educational_background, setEducational_background] = React.useState<Educational_backgroundInterface[]>([]);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -52,7 +52,7 @@ function UserCreate() {
     const id = event.target.id as keyof typeof UserCreate;
     const { value } = event.target;
     setUser({ ...user, [id]: value });
-
+    console.log(`[${id}]: ${value}`);
   };
 
   const convertType = (data: string | number | undefined) => {
@@ -67,13 +67,12 @@ function UserCreate() {
       Phonenumber: user.Phonenumber,
       Password: user.Password,
 
-      PositionID: convertType(user.PositionID),
+      Educational_backgroundID: convertType(user.Educational_backgroundID),
       RoleID: convertType(user.RoleID),
       GenderID: convertType(user.GenderID),
     };
     console.log(data);
     let res = await CreateUser(data);
-    console.log(res);
     if (res) {
       setSuccess(true);
     } else {
@@ -113,21 +112,21 @@ function UserCreate() {
     }
   };
 
-  const getPosition = async () => {
-    let res = await ListPositions();
+  const getEducational_background = async () => {
+    let res = await ListEducational_backgrounds();
     if (res) {
-      setPosition(res);
-      console.log("Load Position Complete");
+      setEducational_background(res);
+      console.log("Load Educational_background Complete");
     }
     else {
-      console.log("Load Position InComplete!!!!");
+      console.log("Load Educational_background InComplete!!!!");
     }
   };
 
   useEffect(() => {
     getRole();
     getGender();
-    getPosition();
+    getEducational_background();
   }, []);
 
   return (
@@ -287,18 +286,18 @@ function UserCreate() {
 
           <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
-              <p>Position</p>
+              <p>Educational Background</p>
               <Select
                 required
                 defaultValue={"0"}
                 // value={request.RHD_ID + ""}
                 onChange={handleChange}
                 inputProps={{
-                  name: "PositionID",
+                  name: "Educational_backgroundID",
                 }}
               >
                 <MenuItem value={"0"}>กรุณาเลือกตำแหน่ง</MenuItem>
-                {position?.map((item: PositionsInterface) =>
+                {educational_background?.map((item: Educational_backgroundInterface) =>
                   <MenuItem
                     key={item.ID}
                     value={item.ID}

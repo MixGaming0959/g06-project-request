@@ -29,7 +29,7 @@ func SetupDatabase() {
 	database.AutoMigrate(
 		&Role{},
 		&Gender{},
-		&Position{},
+		&Educational_background{},
 		&JobType{},
 		&Distributor{},
 		&Building{},
@@ -55,12 +55,9 @@ func SetupDatabase() {
 	db.Model(&Role{}).Create(&Role{Name: "Admin"})
 	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
 	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
-	db.Model(&Position{}).Create(&Position{Name: "Header"})
-	db.Model(&Position{}).Create(&Position{Name: "Employee"})
-	db.Model(&Position{}).Create(&Position{Name: "Teacher"})
-	db.Model(&Position{}).Create(&Position{Name: "Teaching Assistant"})
-	db.Model(&Position{}).Create(&Position{Name: "Student"})
-	db.Model(&Position{}).Create(&Position{Name: "Officer"})
+	db.Model(&Educational_background{}).Create(&Educational_background{Name: "ปริญญาเอก"})
+	db.Model(&Educational_background{}).Create(&Educational_background{Name: "ปริญญาโท"})
+	db.Model(&Educational_background{}).Create(&Educational_background{Name: "ปริญญาตรี"})
 	db.Model(&Distributor{}).Create(&Distributor{Name: "ร้านA", Location: ".."})
 	db.Model(&Distributor{}).Create(&Distributor{Name: "ร้านB", Location: ".."})
 	db.Model(&Brand{}).Create(&Brand{Name: "Brand A"})
@@ -74,8 +71,8 @@ func SetupDatabase() {
 	db.Model(&DMGLevel{}).Create(&DMGLevel{DMGLevel: "ซ่อมได้"})
 	db.Model(&DMGLevel{}).Create(&DMGLevel{DMGLevel: "ต้องเปลี่ยนอุปกรณ์บางส่วน"})
 	db.Model(&DMGLevel{}).Create(&DMGLevel{DMGLevel: "ไม่สามารถซ่อมได้"})
-	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมคอม"})
-	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมรถ"})
+	db.Model(&JobType{}).Create(&JobType{Name: "ไม่แน่ใจว่าชำรุดที่ไหน"})
+	db.Model(&JobType{}).Create(&JobType{Name: "ซ่อมจอคอม"})
 	db.Model(&Building{}).Create(&Building{Name: "F01"})
 	db.Model(&Building{}).Create(&Building{Name: "F02"})
 	db.Model(&Building{}).Create(&Building{Name: "F03"})
@@ -133,37 +130,37 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM roles WHERE name = ?", "Tech").Scan(&r_tech)
 	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
 
-	var position Position
-	db.Raw("SELECT * FROM Positions WHERE Position = ?", "A").Scan(&position)
+	var position Educational_background
+	db.Raw("SELECT * FROM Educational_backgrounds WHERE Name = ?", "ปริญญาโท").Scan(&position)
 
 	db.Model(&User{}).Create(&User{
-		Name:         "นาย A",
-		Email:        "user@gmail.com",
-		Phonenumber: "0555555555",
-		Password:     string(password),
-		Role:         r_user,
-		Gender:       male,
-		Position:     position,
+		Name:                   "นาย A",
+		Email:                  "user@gmail.com",
+		Phonenumber:            "0555555555",
+		Password:               string(password),
+		Role:                   r_user,
+		Gender:                 male,
+		Educational_background: position,
 	})
 
 	db.Model(&User{}).Create(&User{
-		Name:         "นาง C",
-		Email:        "tech@gmail.com",
-		Phonenumber: "0555555551",
-		Password:     string(password),
-		Role:         r_tech,
-		Gender:       female,
-		Position:     position,
+		Name:                   "นาง C",
+		Email:                  "tech@gmail.com",
+		Phonenumber:            "0555555551",
+		Password:               string(password),
+		Role:                   r_tech,
+		Gender:                 female,
+		Educational_background: position,
 	})
 
 	db.Model(&User{}).Create(&User{
-		Name:         "Admin",
-		Email:        "admin@gmail.com",
-		Phonenumber: "0555555552",
-		Password:     string(password),
-		Role:         r_admin,
-		Gender:       male,
-		Position:     position,
+		Name:                   "Admin",
+		Email:                  "admin@gmail.com",
+		Phonenumber:            "0555555552",
+		Password:               string(password),
+		Role:                   r_admin,
+		Gender:                 male,
+		Educational_background: position,
 	})
 
 	// มีการ add ข้อมูล user RHD Device แค่นั้น (รวม Entityลูกด้วยนะ เช่น role Gender DMGLevel อะไรแบบนี้)

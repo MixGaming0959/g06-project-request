@@ -15,11 +15,11 @@ type User struct {
 
 	RoleID     *uint
 	GenderID   *uint
-	PositionID *uint
+	Educational_backgroundID *uint
 
 	Role     Role     `gorm:"references:id"`
 	Gender   Gender   `gorm:"references:id"`
-	Position Position `gorm:"references:id"`
+	Educational_background Educational_background `gorm:"references:id"`
 
 	Request         []Request          `gorm:"foreignkey:UserID"`
 	Cart            []Cart             `gorm:"foreignkey:UserID"`
@@ -110,10 +110,10 @@ type Gender struct {
 }
 
 // หน้าที่ทับซ่อมกับ Role หรือเปล่า ?
-type Position struct {
+type Educational_background struct {
 	gorm.Model
 	Name string `gorm:"uniqueIndex"`
-	User []User `gorm:"foreignkey:PositionID"`
+	User []User `gorm:"foreignkey:Educational_backgroundID"`
 }
 
 type Building struct {

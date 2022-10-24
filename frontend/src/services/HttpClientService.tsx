@@ -73,7 +73,7 @@ async function ListBuildings() {
   return res;
 }
 
-async function ListPositions() {
+async function ListEducational_backgrounds() {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -82,7 +82,7 @@ async function ListPositions() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/buildings`, requestOptions)
+  let res = await fetch(`${apiUrl}/educational_backgrounds`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -764,7 +764,7 @@ export {
   ListBrands,
   ListDistributors,
   ListUsers,
-  ListPositions,
+  ListEducational_backgrounds,
   ListRoles,
   ListGenders,
   CreateUser,

@@ -1,7 +1,6 @@
 import { GendersInterface } from "./IGender";
-import { HistorysInterface } from "./IHistory";
-import { PositionsInterface } from "./IPosition";
 import { RolesInterface } from "./IRole";
+import { Educational_backgroundInterface } from "./IEducational_background";
 
 export interface UsersInterface {
 
@@ -11,13 +10,12 @@ export interface UsersInterface {
     Phonenumber?: string;
     Password?: string;
 
-    PositionID?: number;
+    Educational_backgroundID?: number;
     RoleID?: number;
     GenderID?: number;
 
     Role?: RolesInterface;
     Gender?: GendersInterface;
-    Position?: PositionsInterface
+    Educational_background?: Educational_backgroundInterface
 
-    // History?:HistorysInterface;
 }
