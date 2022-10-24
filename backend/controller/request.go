@@ -15,30 +15,30 @@ func CreateRequest(c *gin.Context) {
 	var JobType entity.JobType
 	var User entity.User
 
-	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร watchVideo
+	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 12 จะถูก bind เข้าตัวแปร Request
 	if err := c.ShouldBindJSON(&Request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// 9: ค้นหา Room_has_Device ด้วย id
+	// 13 ค้นหา Room_has_Device ด้วย id
 	if tx := entity.DB().Where("id = ?", Request.Room_has_Device_ID).First(&Room_has_Device); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Room_has_Device in room not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "not found device in room "})
 		return
 	}
 
-	// 10: ค้นหา JobType ด้วย id
+	// 14: ค้นหา JobType ด้วย id
 	if tx := entity.DB().Where("id = ?", Request.JobTypeID).First(&JobType); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "JobType not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "not found JobType"})
 		return
 	}
 
-	// 11: ค้นหา User ด้วย id
+	// x: ค้นหา User ด้วย id ขั้นตอนนี้ไม่จำเป็น เพราะมีการเช็คตั้งแต่ ขั้นตอนที่3
 	if tx := entity.DB().Where("id = ?", Request.UserID).First(&User); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "not found User"})
 		return
 	}
-	// 12: สร้าง WatchVideo
+	// 15: สร้าง Request
 	rq := entity.Request{
 		Explain:    Request.Explain,
 		Date_Start: Request.Date_Start,
@@ -48,7 +48,7 @@ func CreateRequest(c *gin.Context) {
 		JobType:         JobType,
 	}
 
-	// 13: บันทึก
+	// 16: บันทึก
 	if err := entity.DB().Create(&rq).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
