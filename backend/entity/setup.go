@@ -84,42 +84,14 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM buildings WHERE name = ?", "F03").Scan(&building3)
 	db.Raw("SELECT * FROM buildings WHERE name = ?", "F04").Scan(&building4)
 
-	// Room data
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B101",
-		Building: building1,
-	})
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B102",
-		Building: building1,
-	})
-	// F02
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B201",
-		Building: building2,
-	})
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B202",
-		Building: building2,
-	})
-	// F03
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B302",
-		Building: building3,
-	})
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B302",
-		Building: building3,
-	})
-	// F04
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B401",
-		Building: building4,
-	})
-	db.Model(&Room{}).Create(&Room{
-		Name:     "B402",
-		Building: building4,
-	})
+	db.Model(&Room{}).Create(&Room{Name:"B101",Building: building1,})
+	db.Model(&Room{}).Create(&Room{Name:"B102",Building: building1,})
+	db.Model(&Room{}).Create(&Room{Name:"B201",Building: building2,	})
+	db.Model(&Room{}).Create(&Room{Name:"B202",Building: building2,	})
+	db.Model(&Room{}).Create(&Room{Name:"B302",Building: building3,	})
+	db.Model(&Room{}).Create(&Room{Name:"B302",Building: building3,	})
+	db.Model(&Room{}).Create(&Room{Name:"B401",Building: building4,	})
+	db.Model(&Room{}).Create(&Room{Name:"B402",Building: building4,	})
 
 	var male, female Gender
 	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
