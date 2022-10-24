@@ -190,7 +190,19 @@ function RequestCreate() {
     <Paper>
 
       <Divider />
-      <Grid container spacing={3} sx={{ padding: 2 }}>       
+      <Grid container spacing={3} sx={{ padding: 2 }}>  
+        <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+            <p>ชื่อผู้แจ้ง</p>
+              <TextField
+                value={user.Name || ""}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </FormControl>
+          </Grid> 
+
         <Grid item xs={6} >
           <p>ตึก</p>
           <FormControl required fullWidth >
