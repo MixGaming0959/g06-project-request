@@ -17,27 +17,20 @@ function Requests() {
     }
   };
 
+
   const columns: GridColDef[] = [
     { field: "ID", headerName: "ลำดับ", width: 50 },
     { field: "Date_Start", headerName: "วันที่อุปกรณ์พัง", width: 200 ,
       type: 'dateTime',
       valueGetter: ({ value }) => value && new Date(value),},
     { field: "Explain", headerName: "คำอธิบาย", width: 300 },
-    {
-      field: "Room_has_Device",
-      headerName: "...",
-      width: 150,
-      valueFormatter: (params) => params.value.RoomID,
-    },
 
   ];
 
   useEffect(() => {
     getRequests();
-    console.log(requests);
-
   }, []);
-  
+
   return (
     <div>
       <Container maxWidth="md">
