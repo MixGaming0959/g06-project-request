@@ -677,7 +677,10 @@ async function CreateHistory(data: HistorysInterface) {
 async function CreateRHD(data: RHDsInterface) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
     body: JSON.stringify(data),
   };
 
@@ -697,7 +700,10 @@ async function CreateRHD(data: RHDsInterface) {
 async function CreateDevice(data: RHDsInterface) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
     body: JSON.stringify(data),
   };
 
@@ -717,7 +723,10 @@ async function CreateDevice(data: RHDsInterface) {
 async function CreateUser(data: UsersInterface) {
   const requestOptions = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
     body: JSON.stringify(data),
   };
 
