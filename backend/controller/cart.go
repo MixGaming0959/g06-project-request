@@ -13,15 +13,10 @@ func CreateCart(c *gin.Context) {
 	var user entity.User
 	var request entity.Request
 	var estimate entity.Estimate
-	c.JSON(http.StatusOK, gin.H{"data": cart})
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 8 จะถูก bind เข้าตัวแปร Cart
 
 	if err := c.ShouldBindJSON(&cart); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	if err := entity.DB().Create(&cart).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
