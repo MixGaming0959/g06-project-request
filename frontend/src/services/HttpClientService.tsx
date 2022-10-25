@@ -4,6 +4,7 @@ import { RequestsInterface } from "../models/IRequest";
 import { CartsInterface } from "../models/ICart";
 import { HistorysInterface } from "../models/IHistory";
 import { RHDsInterface } from "../models/IRHD";
+import { DevicesInterface } from "../models/IDevice";
 
 const apiUrl = "http://localhost:8080";
 
@@ -697,7 +698,7 @@ async function CreateRHD(data: RHDsInterface) {
   return res;
 }
 
-async function CreateDevice(data: RHDsInterface) {
+async function CreateDevice(data: DevicesInterface) {
   const requestOptions = {
     method: "POST",
     headers: { 
