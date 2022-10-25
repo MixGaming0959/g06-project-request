@@ -66,6 +66,12 @@ function RequestCreate() {
     setError(false);
   };
 
+  function clear() {
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  }
+
   const handleInputChange_Text = (
       event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
@@ -165,6 +171,7 @@ function RequestCreate() {
     let res = await CreateRequest(data);
     console.log(res);
     if (res) {
+      clear();
       setSuccess(true);
     } else {
       setError(true);
@@ -315,7 +322,7 @@ function RequestCreate() {
             </Select>
           </FormControl>
         </Grid>
-
+        
         <Grid item xs={6}>
           <p>วันที่และเวลา</p>
           <FormControl fullWidth > 
@@ -334,19 +341,32 @@ function RequestCreate() {
             </LocalizationProvider>
           </FormControl>
         </Grid>
-          
-        <Grid item xs={12}>
+        <Grid item xs={6}></Grid>
+        <Grid item xs={4}>
           <Button component={RouterLink} to="/requests" variant="contained">
             Back
           </Button>
+        </Grid>
+
+        <Grid item xs={4}>
           <Button
-            style={{ float: "right" }}
-            onClick={submit}
+            onClick={ clear } 
+            variant="contained"
+            color="primary"
+          >
+            ล้างข้อมูล
+          </Button>
+        </Grid>
+        <Grid item xs={4}>
+          <Button
+
+            onClick={ submit }
             variant="contained"
             color="primary"
           >
             Submit
           </Button>
+          
         </Grid>
 
       </Grid>
