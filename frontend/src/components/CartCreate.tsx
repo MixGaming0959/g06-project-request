@@ -157,7 +157,8 @@ function CartCreate() {
       RequestID: convertType(cart.RequestID),
 
     };
-
+    console.log(data);
+    
     let res = await CreateCart(data);
     console.log(res);
     if (res) {
