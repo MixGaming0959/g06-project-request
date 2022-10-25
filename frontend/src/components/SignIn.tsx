@@ -64,10 +64,6 @@ function SignIn() {
     setError(false);
   };
 
-  function onClick() {
-    alert('You clicked me!');
-  }
-
   const submit = async () => {
     let res = await Login(signin);
     
