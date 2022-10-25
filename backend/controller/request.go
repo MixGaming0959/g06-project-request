@@ -60,7 +60,7 @@ func CreateRequest(c *gin.Context) {
 func GetRequest(c *gin.Context) {
 	var request entity.Request
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("JobType").Preload("Room_has_Device").Raw("SELECT * FROM requests WHERE id = ?", id).Find(&request).Error; err != nil {
+	if err := entity.DB().Preload("Cart").Preload("Cart.History").Preload("User").Preload("JobType").Preload("Room_has_Device").Raw("SELECT * FROM requests WHERE id = ?", id).Find(&request).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -70,7 +70,7 @@ func GetRequest(c *gin.Context) {
 // GET /requests
 func ListRequests(c *gin.Context) {
 	var requests []entity.Request
-	if err := entity.DB().Preload("Cart").Preload("Room_has_Device").Preload("Room_has_Device.Device").Preload("Room_has_Device.Room").Preload("Room_has_Device.Room.Building").Raw("SELECT * FROM requests").Find(&requests).Error; err != nil {
+	if err := entity.DB().Preload("Cart").Preload("Cart.History").Preload("Room_has_Device").Preload("Room_has_Device.Device").Preload("Room_has_Device.Room").Preload("Room_has_Device.Room.Building").Raw("SELECT * FROM requests").Find(&requests).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
