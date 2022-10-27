@@ -144,11 +144,11 @@ return (
               <MenuItem value={"0"}>กรุณาเลือกร้าน</MenuItem>
               {distributors?.map((item: DistributorsInterface) => 
                 <MenuItem key={item.ID} value={item.ID}> {item.Name} </MenuItem>)}
-            </Select>
+            </Select> 
           </Grid>
 
           <Grid item xs={12}>
-            <Button component={RouterLink} to="/device" variant="contained"> กลับ </Button>
+            <Button component={RouterLink} to="/devices" variant="contained"> กลับ </Button>
             <Button style={{ float: "right" }} onClick={submit} variant="contained" color="success" > บันทึก </Button>
           </Grid>
           
